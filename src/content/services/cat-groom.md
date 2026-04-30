@@ -1,17 +1,19 @@
 ---
 title: "Cat Grooming"
 species: "cat"
-summary: "Gentle lion cut, mat removal, bath if needed, nails and ears — low-stress for felines."
-priceNote: "Final price set in person — varies with coat length, condition, and temperament."
+summary: "A calm, low-stress experience for felines — gentle lion cut on request, careful mat removal, soothing bath if needed, nails, and ears."
+priceFrom: 35
+priceNote: "Final price varies with coat length, condition, and temperament — we'll always confirm before we begin."
 duration: "60 – 120 minutes"
 order: 30
 featured: true
 includes:
   - "Pre-groom assessment in a quiet, cat-only window"
-  - "Comb-out or de-mat (no shave unless welfare requires)"
-  - "Optional bath with cat-safe shampoo and warm towel dry"
-  - "Lion cut, comb cut, or full hand-comb"
-  - "Nail trim, ear check, sanitary tidy"
+  - "Gentle lion cut when requested"
+  - "Careful mat removal"
+  - "Soothing bath only if needed"
+  - "Nail trimming"
+  - "Ear cleaning"
 faq:
   - q: "Do you sedate cats?"
     a: "No. Sedation is a vet decision, not a grooming one. We see one cat at a time in a quiet, dog-free window so most cats can be groomed without it. If your cat needs sedation, we'll refer you to a fear-free vet."
@@ -23,5 +25,6 @@ faq:
     a: "Long-haired cats every 6–8 weeks. Short-haired cats every 3–4 months for nails, ears, and a de-shed. Senior cats often benefit from more frequent, shorter visits."
 ---
 
-We see one cat at a time, in a quiet room, with minimal handling.
-For severely matted cats we'll recommend the kindest path — sometimes that's a vet-supervised shave.
+A calm, low-stress experience designed especially for felines. We offer a gentle lion cut when requested, careful mat removal, a soothing bath only if needed, nail trimming, and ear cleaning — all handled with patience and expertise.
+
+Your cat leaves feeling lighter and more comfortable.

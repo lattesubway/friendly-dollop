@@ -1,21 +1,22 @@
 ---
 title: "Full Groom"
 species: "dog"
-summary: "Bath, haircut/style, nails, ears, glands, and a thorough brush-out — the most popular service for breed-specific looks."
-priceNote: "Final price set in person — varies with size, coat condition, and the cut you'd like."
+summary: "A complete pampering session — luxurious bath, precision haircut tailored to your breed, and a thorough brush-out. Our most requested service for that polished, breed-specific look."
+priceFrom: 60
+priceNote: "Final price varies with breed, coat condition, size, and individual needs — we'll always confirm before we begin."
 duration: "2 – 3 hours"
 order: 10
 featured: true
 includes:
-  - "Warm hydrobath with coat-matched shampoo & conditioner"
-  - "High-velocity dry and full brush-out"
-  - "Hand-finished haircut/style — breed-standard or your preference"
-  - "Sanitary trim, paw pads, ear cleaning, gland expression"
-  - "Nail trim & file"
-  - "Light cologne and a bandana or bow"
+  - "Luxurious bath with premium, hypoallergenic products"
+  - "Precision haircut and styling tailored to your pet's breed"
+  - "Nail trimming"
+  - "Ear cleaning"
+  - "Gland expression"
+  - "Indulgent, thorough brush-out"
 faq:
   - q: "How long will my dog be there?"
-    a: "Two to three hours, start to finish. Drop-off windows are 7:30 – 10:30 AM, pickup at 2 PM. We don't kennel between steps — your dog is with a groomer the whole time."
+    a: "Two to three hours, start to finish. Drop-off windows are 7:30 – 10:30 AM, pickup at 2 PM. Your dog is with a groomer the whole time — no all-day waits."
   - q: "Do you do specific breed cuts?"
     a: "Yes. Tell us the look you want (or send a reference photo at booking) and we'll work to it. Breed-standard cuts, teddy/puppy cuts, asymmetric pet cuts, and continental clips for poodles all welcome."
   - q: "What if my dog is matted?"
@@ -24,5 +25,6 @@ faq:
     a: "Yes. De-shed, teeth brushing, ear cleaning, blueberry facial, and flea & tick are all available — see the Add-ons section."
 ---
 
-Best for dogs who need a full reset — long coats, doodles, terriers, anyone overdue.
-We work slowly and quietly, in small numbers, so your dog isn't waiting in a kennel all day.
+A complete pampering session featuring a luxurious bath with premium products, precision haircut and styling tailored to your pet's breed, nail trimming, ear cleaning, gland expression, and an indulgent, thorough brush-out.
+
+This is our most requested service — ideal for achieving that polished, breed-specific look your pet will wear with pride.
