@@ -1,0 +1,43 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Section from "@/components/Section.astro";
+---
+
+<BaseLayout title="About" description="A small, considered grooming studio in Santa Monica — with a soft spot for cats and the dogs who run the neighborhood.">
+  <Section eyebrow="About" title="A studio built for the pet, first.">
+    <div class="grid gap-12 md:grid-cols-12">
+      <div class="md:col-span-7 space-y-5 text-[17px] leading-relaxed text-black/80">
+        <p>
+          The Pet Affaire is a small grooming studio in Santa Monica. We started it because the
+          pet-spa world had drifted somewhere noisy and impersonal — assembly-line bookings, hours
+          in cages, hurried hands. We wanted the opposite: a quiet room, one pet at a time, and
+          enough time to do the job properly.
+        </p>
+        <p>
+          Most of what makes a good groom isn't the haircut. It's how the pet feels at the end of
+          it. We work slowly, read the animal in front of us, and stop when stopping is the right
+          call. We are honest about what your dog's coat will and won't do, and we'll tell you the
+          truth when a mat is past combing.
+        </p>
+        <p>
+          Cats get their own quiet windows — no dog noise, no rush, no stranger touching them
+          before they're ready. We see one cat at a time, every time.
+        </p>
+      </div>
+      <aside class="md:col-span-5">
+        <div class="aspect-[4/5] rounded-3xl bg-gradient-to-br from-[var(--color-sage)] via-[var(--color-bone)] to-[var(--color-rose)]"></div>
+      </aside>
+    </div>
+  </Section>
+
+  <Section eyebrow="Our promises" title="What we'll always do." bg="bone">
+    <ul class="grid gap-6 md:grid-cols-2 text-[15px] leading-relaxed text-black/75">
+      <li><strong class="text-black">One pet at a time.</strong> No barking room, no kennel waits.</li>
+      <li><strong class="text-black">Hand-dried.</strong> No drying cages, ever.</li>
+      <li><strong class="text-black">Honest pricing.</strong> If a groom is going to cost more, you'll hear it before we begin.</li>
+      <li><strong class="text-black">Welfare-first.</strong> If a groom isn't safe to finish, we stop and explain why.</li>
+      <li><strong class="text-black">Cat-only windows.</strong> Quiet, dog-free, calm.</li>
+      <li><strong class="text-black">Open communication.</strong> Real-time texts on arrival, mid-groom, and ready-for-pickup.</li>
+    </ul>
+  </Section>
+</BaseLayout>

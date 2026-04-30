@@ -1,0 +1,33 @@
+---
+interface Props {
+  id?: string;
+  eyebrow?: string;
+  title?: string;
+  intro?: string;
+  bg?: "cream" | "bone" | "ink";
+  class?: string;
+}
+const { id, eyebrow, title, intro, bg = "cream", class: cls = "" } = Astro.props;
+const bgClass =
+  bg === "ink"
+    ? "bg-[var(--color-ink)] text-[var(--color-cream)]"
+    : bg === "bone"
+    ? "bg-[var(--color-bone)]"
+    : "";
+---
+<section id={id} class={`py-20 md:py-28 ${bgClass} ${cls}`}>
+  <div class="mx-auto max-w-7xl px-6 md:px-10">
+    {(eyebrow || title || intro) && (
+      <header class="mb-12 max-w-3xl">
+        {eyebrow && (
+          <p class="text-xs uppercase tracking-[0.22em] text-current/60">{eyebrow}</p>
+        )}
+        {title && (
+          <h2 class="mt-4 font-display text-3xl md:text-5xl leading-[1.05]">{title}</h2>
+        )}
+        {intro && <p class="mt-5 text-base md:text-lg text-current/75">{intro}</p>}
+      </header>
+    )}
+    <slot />
+  </div>
+</section>

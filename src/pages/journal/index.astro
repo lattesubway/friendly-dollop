@@ -1,0 +1,36 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Section from "@/components/Section.astro";
+import { getCollection } from "astro:content";
+
+const posts = (await getCollection("journal"))
+  .filter((p) => !p.data.draft)
+  .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
+---
+
+<BaseLayout title="Journal" description="Notes, guides, and the occasional opinion from The Pet Affaire grooming studio.">
+  <Section eyebrow="Journal" title="Notes from the studio.">
+    <ul class="divide-y divide-black/10">
+      {posts.map((p) => (
+        <li>
+          <a href={`/journal/${p.id}`} class="grid items-start gap-6 py-8 md:grid-cols-12 group">
+            <p class="md:col-span-3 text-xs uppercase tracking-[0.2em] text-black/50">
+              {p.data.pubDate.toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" })}
+            </p>
+            <div class="md:col-span-9">
+              <h2 class="font-display text-3xl leading-tight group-hover:underline">{p.data.title}</h2>
+              <p class="mt-2 max-w-2xl text-[15px] text-black/70">{p.data.description}</p>
+              {p.data.tags.length > 0 && (
+                <ul class="mt-3 flex flex-wrap gap-2">
+                  {p.data.tags.map((t) => (
+                    <li class="rounded-full border border-black/10 px-2 py-0.5 text-[11px] uppercase tracking-wider text-black/55">{t}</li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </Section>
+</BaseLayout>

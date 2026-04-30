@@ -1,0 +1,56 @@
+---
+import { getCollection, render, type CollectionEntry } from "astro:content";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("journal");
+  return posts
+    .filter((p) => !p.data.draft)
+    .map((post) => ({ params: { slug: post.id }, props: { post } }));
+}
+
+interface Props { post: CollectionEntry<"journal">; }
+const { post } = Astro.props;
+const { Content } = await render(post);
+
+const date = post.data.pubDate.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
+
+const articleSchema = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline: post.data.title,
+  description: post.data.description,
+  datePublished: post.data.pubDate.toISOString(),
+  dateModified: (post.data.updatedDate ?? post.data.pubDate).toISOString(),
+  author: { "@type": "Organization", name: post.data.author },
+  publisher: { "@type": "Organization", name: "The Pet Affaire" },
+  mainEntityOfPage: Astro.url.toString(),
+};
+---
+
+<BaseLayout
+  title={post.data.title}
+  description={post.data.description}
+  type="article"
+  image={post.data.cover}
+>
+  <article class="mx-auto max-w-2xl px-6 py-20 md:py-28">
+    <p class="text-xs uppercase tracking-[0.22em] text-black/55">{date}</p>
+    <h1 class="mt-4 font-display text-4xl md:text-5xl leading-[1.05]">{post.data.title}</h1>
+    <p class="mt-4 text-lg text-black/70">{post.data.description}</p>
+
+    {post.data.cover && (
+      <img src={post.data.cover} alt="" class="mt-10 w-full rounded-2xl" loading="eager" />
+    )}
+
+    <div class="prose prose-neutral mt-10 max-w-none text-[17px] leading-relaxed">
+      <Content />
+    </div>
+
+    <hr class="my-12 border-black/10" />
+    <p class="text-sm">
+      <a class="underline" href="/journal">← All posts</a>
+    </p>
+  </article>
+  <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
+</BaseLayout>

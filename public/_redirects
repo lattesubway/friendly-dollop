@@ -1,0 +1,7 @@
+# Netlify redirects
+/index.html      /                 301
+/home            /                 301
+/about-us        /about            301
+
+# Useful long-tail keepers if you migrate from Cargo
+# /old-services-page  /services    301

@@ -1,0 +1,152 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Section from "@/components/Section.astro";
+import Reviews from "@/components/Reviews.astro";
+import { getCollection } from "astro:content";
+import { SITE } from "@/consts";
+
+const services = (await getCollection("services"))
+  .filter((s) => s.data.featured)
+  .sort((a, b) => a.data.order - b.data.order);
+
+const journal = (await getCollection("journal"))
+  .filter((p) => !p.data.draft)
+  .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime())
+  .slice(0, 2);
+---
+
+<BaseLayout>
+  <section class="relative">
+    <div class="mx-auto grid max-w-7xl gap-12 px-6 py-20 md:grid-cols-12 md:px-10 md:py-28">
+      <div class="md:col-span-7 reveal">
+        <p class="text-xs uppercase tracking-[0.22em] text-black/55">Santa Monica · Est. cared for</p>
+        <h1 class="mt-5 font-display text-5xl leading-[1.02] md:text-7xl">
+          Grooming with quiet hands —<br class="hidden md:block" />
+          <span class="italic text-[var(--color-clay)]">for cats and dogs</span>.
+        </h1>
+        <p class="mt-6 max-w-xl text-lg text-black/70">
+          A small, considered studio on the Westside. Hand-finished cuts, low-stress baths,
+          and one pet at a time so your cat or dog can actually relax.
+        </p>
+        <div class="mt-8 flex flex-wrap gap-3">
+          <a href="/book" class="inline-flex items-center rounded-full bg-[var(--color-ink)] px-5 py-3 text-sm text-[var(--color-cream)] hover:bg-black">
+            Book an appointment
+          </a>
+          <a href="/services" class="inline-flex items-center rounded-full border border-black/15 px-5 py-3 text-sm hover:border-black/40">
+            See services & pricing
+          </a>
+        </div>
+        <dl class="mt-12 grid max-w-md grid-cols-3 gap-6 text-sm">
+          <div>
+            <dt class="text-black/50">Hours</dt>
+            <dd class="mt-1 font-medium">Tue – Sat</dd>
+          </div>
+          <div>
+            <dt class="text-black/50">Format</dt>
+            <dd class="mt-1 font-medium">Appointment only</dd>
+          </div>
+          <div>
+            <dt class="text-black/50">Pace</dt>
+            <dd class="mt-1 font-medium">One pet at a time</dd>
+          </div>
+        </dl>
+      </div>
+
+      <aside class="md:col-span-5 md:pl-6 reveal">
+        <div class="aspect-[4/5] w-full overflow-hidden rounded-3xl bg-[var(--color-bone)]">
+          <div class="flex h-full w-full items-center justify-center bg-gradient-to-br from-[var(--color-rose)] via-[var(--color-bone)] to-[var(--color-sage)]">
+            <span class="font-display text-2xl text-black/40">[ studio photo ]</span>
+          </div>
+        </div>
+        <p class="mt-3 text-xs text-black/50">Replace with a real studio or pet portrait.</p>
+      </aside>
+    </div>
+  </section>
+
+  <Section
+    eyebrow="What we do"
+    title="A short list of services, done very well."
+    intro="Every visit includes a coat assessment, a calm intro, and a finish that's hand-checked before your pet leaves."
+    bg="bone"
+  >
+    <ul class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      {services.map((s) => (
+        <li class="group rounded-2xl border border-black/10 bg-white p-6 transition hover:-translate-y-0.5 hover:shadow-md">
+          <div class="flex items-start justify-between gap-4">
+            <h3 class="font-display text-2xl">{s.data.title}</h3>
+            <span class="rounded-full border border-black/10 px-2 py-0.5 text-[11px] uppercase tracking-wider text-black/55">
+              {s.data.species}
+            </span>
+          </div>
+          <p class="mt-3 text-sm text-black/70">{s.data.summary}</p>
+          <p class="mt-5 text-sm">
+            {s.data.priceFrom && <><span class="text-black/55">From</span> <span class="font-medium">${s.data.priceFrom}</span></>}
+            {s.data.duration && <span class="text-black/55"> · {s.data.duration}</span>}
+          </p>
+        </li>
+      ))}
+    </ul>
+    <div class="mt-10">
+      <a href="/services" class="text-sm underline underline-offset-4 hover:text-black">All services & pricing →</a>
+    </div>
+  </Section>
+
+  <Section eyebrow="The studio" title="Calm by design.">
+    <div class="grid gap-10 md:grid-cols-3 text-[15px] leading-relaxed text-black/75">
+      <div>
+        <h3 class="font-display text-xl text-black">One pet at a time</h3>
+        <p class="mt-2">No barking room, no waiting all day in a kennel. We book in single windows so your pet has our full attention.</p>
+      </div>
+      <div>
+        <h3 class="font-display text-xl text-black">Cat-only windows</h3>
+        <p class="mt-2">Dedicated quiet hours just for cats — no dog smells, no dog sounds, no rush.</p>
+      </div>
+      <div>
+        <h3 class="font-display text-xl text-black">Hand-finished</h3>
+        <p class="mt-2">Scissor finishing on every cut. We work to your dog's lines, not a cookie-cutter clip.</p>
+      </div>
+    </div>
+  </Section>
+
+  <Section eyebrow="What clients say" title="Kind words from kind humans." bg="bone">
+    <Reviews featuredOnly limit={3} />
+    <div class="mt-10">
+      <a href="/reviews" class="text-sm underline underline-offset-4 hover:text-black">Read more reviews →</a>
+    </div>
+  </Section>
+
+  <Section eyebrow="From the journal" title="Notes from the studio.">
+    <ul class="grid gap-8 md:grid-cols-2">
+      {journal.map((p) => (
+        <li>
+          <a href={`/journal/${p.id}`} class="group block rounded-2xl border border-black/10 bg-white p-6 transition hover:-translate-y-0.5 hover:shadow-md">
+            <p class="text-xs uppercase tracking-[0.2em] text-black/50">
+              {p.data.pubDate.toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" })}
+            </p>
+            <h3 class="mt-3 font-display text-2xl group-hover:underline">{p.data.title}</h3>
+            <p class="mt-3 text-sm text-black/70">{p.data.description}</p>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </Section>
+
+  <Section bg="ink">
+    <div class="grid items-center gap-8 md:grid-cols-2">
+      <div>
+        <h2 class="font-display text-4xl md:text-5xl leading-tight">Ready when you are.</h2>
+        <p class="mt-4 max-w-md text-current/75">
+          Real-time availability, automatic confirmations, and reminders so nothing slips.
+        </p>
+      </div>
+      <div class="flex flex-wrap gap-3 md:justify-end">
+        <a href="/book" class="rounded-full bg-[var(--color-cream)] px-5 py-3 text-sm text-[var(--color-ink)] hover:bg-white">
+          Book an appointment
+        </a>
+        <a href={SITE.phoneHref} class="rounded-full border border-white/30 px-5 py-3 text-sm hover:border-white/70">
+          Call {SITE.phone}
+        </a>
+      </div>
+    </div>
+  </Section>
+</BaseLayout>

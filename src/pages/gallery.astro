@@ -1,0 +1,50 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Section from "@/components/Section.astro";
+
+// Replace these with real images in /public/gallery/* and update the alt text.
+// Each item supports an optional pet name and breed for richer captions.
+const items = [
+  { src: "/gallery/01.jpg", alt: "Cream goldendoodle after a teddy-bear cut", pet: "Mochi", breed: "Goldendoodle" },
+  { src: "/gallery/02.jpg", alt: "Long-haired tabby after a lion cut", pet: "Biscuit", breed: "Maine Coon mix" },
+  { src: "/gallery/03.jpg", alt: "Standard poodle in a hand-scissored continental clip", pet: "Otto", breed: "Standard Poodle" },
+  { src: "/gallery/04.jpg", alt: "Schnauzer puppy mid-blow-dry, eyes squinting", pet: "Pepper", breed: "Mini Schnauzer" },
+  { src: "/gallery/05.jpg", alt: "Shih Tzu with a topknot bow", pet: "Pearl", breed: "Shih Tzu" },
+  { src: "/gallery/06.jpg", alt: "Persian cat post-comb-out", pet: "Olive", breed: "Persian" },
+  { src: "/gallery/07.jpg", alt: "Bernese mountain dog after a deshed", pet: "Wallace", breed: "Bernese" },
+  { src: "/gallery/08.jpg", alt: "Cavalier King Charles soaking up sun", pet: "Hugo", breed: "Cavalier" },
+  { src: "/gallery/09.jpg", alt: "Yorkie with a fresh face trim", pet: "Beans", breed: "Yorkie" },
+];
+---
+
+<BaseLayout title="Gallery" description="Recent grooms from the studio — cats, dogs, and the occasional very good face.">
+  <Section eyebrow="Gallery" title="Recent grooms.">
+    <ul class="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
+      {items.map((it, i) => (
+        <li class={`overflow-hidden rounded-2xl bg-[var(--color-bone)] ${i % 5 === 0 ? "row-span-2 col-span-2 sm:col-span-1 sm:row-span-2" : ""}`}>
+          <figure class="group relative h-full">
+            <img
+              src={it.src}
+              alt={it.alt}
+              loading={i < 4 ? "eager" : "lazy"}
+              decoding="async"
+              class="block h-full w-full object-cover aspect-square transition duration-500 group-hover:scale-[1.02]"
+              onerror="this.style.opacity='0';this.parentElement.querySelector('[data-fallback]').style.display='flex';"
+            />
+            <div data-fallback class="absolute inset-0 hidden items-center justify-center bg-gradient-to-br from-[var(--color-rose)] via-[var(--color-bone)] to-[var(--color-sage)]">
+              <span class="font-display text-sm text-black/40">{it.pet}</span>
+            </div>
+            {(it.pet || it.breed) && (
+              <figcaption class="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/60 to-transparent p-3 text-[11px] uppercase tracking-wider text-white opacity-0 transition group-hover:opacity-100">
+                {it.pet}{it.breed && <span class="text-white/70"> · {it.breed}</span>}
+              </figcaption>
+            )}
+          </figure>
+        </li>
+      ))}
+    </ul>
+    <p class="mt-10 text-sm text-black/60">
+      Want to see your pet here? Tag us on Instagram <a href="https://instagram.com/thepetaffaire" class="underline">@thepetaffaire</a>.
+    </p>
+  </Section>
+</BaseLayout>
