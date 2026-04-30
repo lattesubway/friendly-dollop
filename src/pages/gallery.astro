@@ -4,6 +4,7 @@ import Section from "@/components/Section.astro";
 
 // Real photos from the studio. Drop matching files into `public/gallery/`.
 // Captions are intentionally short — the photos do the talking.
+// Mark `feature: true` to make a tile span 2x2 in the responsive grid.
 const items = [
   {
     src: "/gallery/01-pom-portrait.jpg",
@@ -23,13 +24,39 @@ const items = [
   },
   {
     src: "/gallery/04-collie-market.jpg",
-    alt: "Black and white shepherd mix sitting calmly at a Santa Monica farmers market after a groom.",
+    alt: "Black and white shepherd mix sitting calmly at the Santa Monica farmers market after a groom.",
     caption: "Out and about, post-groom",
   },
   {
     src: "/gallery/05-pups-grass.jpg",
     alt: "Two small dogs relaxing on artificial grass after their grooming appointment.",
     caption: "Friends, post-spa",
+  },
+  {
+    src: "/gallery/06-tabby-cat.jpg",
+    alt: "Long-haired tabby cat with green eyes, freshly groomed, sitting upright.",
+    caption: "Long-haired tabby · post-groom",
+  },
+  {
+    src: "/gallery/07-dachshund.jpg",
+    alt: "Black and tan dapple dachshund sitting on a bed.",
+    caption: "Dachshund · sleek & shiny",
+  },
+  {
+    src: "/gallery/08-persian-chair.jpg",
+    alt: "White Persian cat sitting on an ornate silver tufted chair.",
+    caption: "Persian · royalty",
+    feature: true,
+  },
+  {
+    src: "/gallery/09-poodle-holiday.jpg",
+    alt: "White poodle sitting next to a lit Christmas tree, photographed in black and white.",
+    caption: "Holiday poodle",
+  },
+  {
+    src: "/gallery/10-pom-mix.jpg",
+    alt: "Black and tan Pomeranian mix with bright eyes, sitting on a wood floor.",
+    caption: "Pom mix · bright eyes",
   },
 ];
 ---
@@ -43,7 +70,7 @@ const items = [
             <img
               src={it.src}
               alt={it.alt}
-              loading={i < 2 ? "eager" : "lazy"}
+              loading={i < 4 ? "eager" : "lazy"}
               decoding="async"
               class="block h-full w-full object-cover aspect-square transition duration-500 group-hover:scale-[1.02]"
               onerror="this.style.opacity='0';this.parentElement.querySelector('[data-fallback]').style.display='flex';"
