@@ -6,7 +6,7 @@ tags: ["studio", "notes"]
 ---
 
 We started this journal as a place to share the small things — how to brush a doodle so it
-actually helps, what to do the night before a cat groom, why we say no to drying cages.
+actually helps, what to do the night before a cat groom, and the small choices that add up to a calm visit.
 
 Expect short reads, photos of dogs and cats mid-zoomies, and the occasional opinion about
 what good grooming looks like. Thanks for being here.
