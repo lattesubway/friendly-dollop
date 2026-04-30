@@ -5,18 +5,17 @@ export const SITE = {
     "Gentle, expert grooming for cats and dogs in Santa Monica, California. Hand-finished cuts, low-stress baths, and a calm, considered space your pet will actually enjoy.",
   url: "https://www.thepetaffaire.com",
   email: "hello@thepetaffaire.com",
-  phone: "(310) 000-0000",
-  phoneHref: "tel:+13100000000",
+  phone: "(310) 396-0804",
+  phoneHref: "tel:+13103960804",
   address: {
-    street: "Santa Monica, CA",
+    street: "3013 Lincoln Boulevard",
     city: "Santa Monica",
     region: "CA",
-    postalCode: "90401",
+    postalCode: "90405",
     country: "US",
   },
   hours: [
-    { day: "Tue – Fri", hours: "9:00 AM – 5:00 PM" },
-    { day: "Saturday", hours: "9:00 AM – 4:00 PM" },
+    { day: "Tue – Sat", hours: "7:30 AM – 3:00 PM" },
     { day: "Sun – Mon", hours: "Closed" },
   ],
   social: {
