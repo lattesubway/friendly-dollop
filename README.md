@@ -38,7 +38,7 @@ netlify.toml          Build + security headers
 ## Things to fill in (do these once, then you're done)
 
 1. **`src/consts.ts`** — real phone, email, address, hours, social URLs, booking URL.
-2. **Booking provider** — open `src/pages/book.astro` and set `provider` to `"square"`, `"calendly"`, `"tally"`, or `"manual"`. See "Booking" below — strongly recommend Square Appointments.
+2. **Booking provider** — by default this site uses **Cal.com** (open source). Sign up, create an event, then update `calLink` / `bookingUrl` in `src/consts.ts`. See "Booking" below for the full setup. Other providers (Square, Calendly, Tally, manual) are also wired — flip `provider` in `src/pages/book.astro`.
 3. **Gift cards** — open `src/pages/gift-cards.astro` and replace `giftCardUrl` with your Square or Stripe checkout link.
 4. **Gallery** — drop real images into `public/gallery/` (filenames `01.jpg`, `02.jpg`, …) and update alt text in `src/pages/gallery.astro`.
 5. **Open Graph image** — put a 1200×630 share image at `public/og-default.jpg`.
@@ -46,15 +46,42 @@ netlify.toml          Build + security headers
 
 ## Booking — replace Tally with a real scheduler
 
-Tally is a form tool, not a scheduler — that's why appointment requests sometimes don't reach you in time. For a grooming business you want a system with calendar, intake, deposits, and automatic SMS+email confirmations on both sides.
+Tally is a form tool, not a scheduler — that's why appointment requests sometimes don't reach you in time. For a grooming business you want a system with calendar, intake, automatic email confirmations, and reminders on both sides.
 
-Recommended order:
+The default `provider` in `src/pages/book.astro` is **Cal.com** — open source (AGPL), beautiful, embeddable, free for the basics. It is the recommended pick.
 
-1. **Square Appointments** (free) — built for service businesses, sends instant SMS/email confirmations, takes deposits, keeps a client + pet history. Set `provider = "square"` in `src/pages/book.astro` and paste the embed URL.
-2. **Calendly** — simpler, but no built-in deposits/no-show fees. `provider = "calendly"`.
-3. **Vagaro** / **Booker** — pet-grooming specific, paid.
+### Setting up Cal.com
 
-Whatever you pick, also enable **email + SMS notifications to both you and the client** in the provider's settings — that's the fix for missed appointments.
+1. Sign up at [cal.com](https://cal.com) (or self-host the open-source version on Railway / Fly.io if you want full ownership — same code).
+2. Create an event type. Suggested defaults:
+   - **Name:** Grooming appointment
+   - **URL slug:** `groom`
+   - **Duration:** 90 minutes (cats) / 120 minutes (dogs) — you can create separate events per species/service
+   - **Buffer time:** 15 min before / 15 min after
+   - **Minimum notice:** 24 hours
+   - **Booking limits:** match your studio capacity (e.g. 1 at a time)
+3. Open Cal's **Workflows** tab and add:
+   - Email confirmation to attendee on booking
+   - Email + push notification to **you** on booking — set this so you never miss one
+   - Email reminder 24 hours before (and 2 hours before for repeat clients)
+4. Connect a calendar (Google / Apple / Outlook) so Cal won't double-book.
+5. Update `src/consts.ts`:
+   ```ts
+   calLink: "<your-cal-username>/groom",
+   calOrigin: "https://cal.com",       // or your self-hosted URL
+   bookingUrl: "https://cal.com/<your-cal-username>/groom",
+   ```
+6. Optional: enable Stripe in Cal.com to take deposits and reduce no-shows.
+
+### Other providers (already wired, just flip the switch)
+
+In `src/pages/book.astro`, change `provider`:
+- `"square"` — Square Appointments (free; closed source). Paste the embed URL into `squareUrl`.
+- `"calendly"` — Calendly inline embed.
+- `"tally"` — your existing Tally form (kept as a fallback).
+- `"manual"` — no calendar; just phone + email.
+
+Whatever you pick, also enable **email + push notifications** in the provider's settings — that's the fix for missed appointments.
 
 ## Forms — make sure you actually see submissions
 
@@ -98,7 +125,35 @@ That's it — it's automatically listed at `/journal`, gets a detail page, and s
 
 ## Adding a service
 
-Create `src/content/services/foo.md` with the front-matter shown in `src/content.config.ts`. Set `featured: true` to surface it on the home page.
+Create `src/content/services/foo.md`:
+
+```md
+---
+title: "Doodle Maintenance Cut"
+species: "dog"            # "dog" | "cat" | "both"
+summary: "A short, easy-care cut for doodles between full grooms."
+priceFrom: 85
+priceNote: "Final price set in person."
+duration: "90 minutes"
+order: 25                 # lower = sorted higher
+featured: true            # show on the home page
+includes:
+  - "Bath and dry"
+  - "Half-inch all-over clip"
+  - "Face, paws, sanitary tidy"
+faq:
+  - q: "How often?"
+    a: "Every 6–8 weeks."
+seoTitle: "Doodle Cut in Santa Monica"
+seoDescription: "Maintenance cuts for goldendoodles and labradoodles..."
+---
+
+Body text in Markdown — appears on the detail page at /services/<filename>/.
+```
+
+The service automatically gets:
+- A listing card at `/services`
+- A full detail page at `/services/<filename>/` with FAQ accordions, related services, and `Service` + `BreadcrumbList` + `FAQPage` JSON-LD.
 
 ## Adding a review
 

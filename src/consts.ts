@@ -22,8 +22,19 @@ export const SITE = {
     instagram: "https://instagram.com/thepetaffaire",
     google: "https://www.google.com/search?q=The+Pet+Affaire+Santa+Monica",
   },
-  // Replace with your real Calendly / Square Appointments / Vagaro link.
-  bookingUrl: "https://calendly.com/thepetaffaire",
+  // Cal.com handle + event slug. Format: "<username>/<event-slug>".
+  // Sign up at https://cal.com (free), create an event called "groom" or similar,
+  // then update this. Self-hosting Cal.com? change calOrigin to your instance.
+  calLink: "thepetaffaire/groom",
+  calOrigin: "https://cal.com",
+  bookingUrl: "https://cal.com/thepetaffaire/groom",
+  // Map: derived from address. Replace with the precise lat/lng if you want.
+  mapEmbedSrc:
+    "https://www.google.com/maps?q=3013+Lincoln+Boulevard,+Santa+Monica,+CA+90405&output=embed",
+  mapDirectionsGoogle:
+    "https://www.google.com/maps/dir/?api=1&destination=3013+Lincoln+Boulevard,+Santa+Monica,+CA+90405",
+  mapDirectionsApple:
+    "https://maps.apple.com/?daddr=3013+Lincoln+Boulevard,+Santa+Monica,+CA+90405",
 } as const;
 
 export const NAV = [

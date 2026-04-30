@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import Section from "@/components/Section.astro";
+import Map from "@/components/Map.astro";
 import { SITE } from "@/consts";
 ---
 
@@ -92,6 +93,14 @@ import { SITE } from "@/consts";
         </p>
       </div>
     </div>
+  </Section>
+
+  <Section eyebrow="Find us" title="On Lincoln, just south of Pico." bg="bone">
+    <Map height="480px" />
+    <p class="mt-6 max-w-2xl text-sm text-black/65">
+      Street parking on Lincoln and on the side streets. We share the block with a small mix of
+      shops — look for our sign and walk in.
+    </p>
   </Section>
 
   <script>

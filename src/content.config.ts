@@ -13,6 +13,12 @@ const services = defineCollection({
     includes: z.array(z.string()).default([]),
     order: z.number().default(0),
     featured: z.boolean().default(false),
+    cover: z.string().optional(),
+    faq: z
+      .array(z.object({ q: z.string(), a: z.string() }))
+      .default([]),
+    seoTitle: z.string().optional(),
+    seoDescription: z.string().optional(),
   }),
 });
 
