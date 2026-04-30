@@ -1,8 +1,8 @@
 export const SITE = {
   name: "The Pet Affaire",
-  tagline: "Cat & Dog Grooming — Santa Monica",
+  tagline: "Gentle Grooming. Tail-Wagging Results.",
   description:
-    "Gentle, expert grooming for cats and dogs in Santa Monica, California. Hand-finished cuts, low-stress baths, and a calm, considered space your pet will actually enjoy.",
+    "Gentle, expert grooming for cats and dogs in Santa Monica, California. Calm handling, hand-finished cuts, and honest neighborhood prices — because grooming, done well, is an art form.",
   url: "https://www.thepetaffaire.com",
   email: "hello@thepetaffaire.com",
   phone: "(310) 396-0804",
