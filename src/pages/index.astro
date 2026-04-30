@@ -3,6 +3,7 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 import Section from "@/components/Section.astro";
 import Reviews from "@/components/Reviews.astro";
 import Map from "@/components/Map.astro";
+import HeroMedia from "@/components/HeroMedia.astro";
 import { getCollection } from "astro:content";
 import { SITE } from "@/consts";
 
@@ -74,12 +75,7 @@ const reviewCount = (await getCollection("reviews")).length;
       </div>
 
       <aside class="md:col-span-5 md:pl-6 reveal">
-        <div class="aspect-[4/5] w-full overflow-hidden rounded-3xl bg-[var(--color-bone)]">
-          <div class="flex h-full w-full items-center justify-center bg-gradient-to-br from-[var(--color-rose)] via-[var(--color-bone)] to-[var(--color-sage)]">
-            <span class="font-display text-2xl text-black/40">[ studio photo ]</span>
-          </div>
-        </div>
-        <p class="mt-3 text-xs text-black/50">Replace with a real studio or pet portrait.</p>
+        <HeroMedia />
       </aside>
     </div>
   </section>

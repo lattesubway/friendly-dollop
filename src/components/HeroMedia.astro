@@ -1,0 +1,50 @@
+---
+import { HERO_MEDIA } from "@/consts";
+
+const kind = HERO_MEDIA.kind;
+---
+
+<div class="aspect-[4/5] w-full overflow-hidden rounded-3xl bg-[var(--color-bone)]">
+  {kind === "video" && (
+    <video
+      class="block h-full w-full object-cover motion-reduce:hidden"
+      autoplay
+      muted
+      loop
+      playsinline
+      preload="metadata"
+      poster={HERO_MEDIA.poster}
+      aria-hidden="true"
+    >
+      {HERO_MEDIA.webm && <source src={HERO_MEDIA.webm} type="video/webm" />}
+      {HERO_MEDIA.mp4 && <source src={HERO_MEDIA.mp4} type="video/mp4" />}
+    </video>
+  )}
+
+  {/* Fallback for reduced-motion users when kind is "video" */}
+  {kind === "video" && HERO_MEDIA.poster && (
+    <img
+      src={HERO_MEDIA.poster}
+      alt={HERO_MEDIA.alt}
+      class="hidden h-full w-full object-cover motion-reduce:block"
+      loading="eager"
+      decoding="async"
+    />
+  )}
+
+  {kind === "image" && HERO_MEDIA.image && (
+    <img
+      src={HERO_MEDIA.image}
+      alt={HERO_MEDIA.alt}
+      class="block h-full w-full object-cover"
+      loading="eager"
+      decoding="async"
+    />
+  )}
+
+  {kind === "placeholder" && (
+    <div class="flex h-full w-full items-center justify-center bg-gradient-to-br from-[var(--color-rose)] via-[var(--color-bone)] to-[var(--color-sage)]">
+      <span class="font-display text-2xl text-black/40">[ studio photo ]</span>
+    </div>
+  )}
+</div>

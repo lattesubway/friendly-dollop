@@ -78,6 +78,40 @@ export const FONTS = {
   },
 } as const;
 
+// ─── Hero media (the big visual on the home page) ─────────────────────────
+// Three modes — set `kind` to whichever you want:
+//
+//   "placeholder"  default gradient with "[ studio photo ]" caption
+//   "image"        a single still photo (set `image` below)
+//   "video"        a looping muted clip (set `mp4`, optional `webm`, optional `poster`)
+//
+// HOW TO USE A VIDEO CLIP:
+//   1. Drop your file into the repo at  public/hero/clip.mp4
+//   2. (Optional but recommended) export a `.webm` too for smaller file sizes
+//      in Chrome/Firefox: `public/hero/clip.webm`
+//   3. (Recommended) export a still frame as `public/hero/poster.jpg` —
+//      it shows instantly while the video buffers and is shown to users
+//      with `prefers-reduced-motion` enabled.
+//   4. Set `kind: "video"` below.
+//
+// Tips for a great hero clip:
+//   • 6 – 12 seconds, will loop silently
+//   • 4:5 portrait orientation reads best (matches the on-screen frame)
+//   • Target <2 MB MP4 so the page stays fast — H.264, ~3 Mbps is plenty
+//   • iPhone "Slo-mo" or any well-lit phone clip works great
+//   • Avoid sudden cuts / flashes; viewers will see a calm loop
+export const HERO_MEDIA = {
+  kind: "placeholder" as "placeholder" | "image" | "video",
+  // For "image" mode:
+  image: "/hero/photo.jpg",
+  // For "video" mode:
+  mp4: "/hero/clip.mp4",
+  webm: "/hero/clip.webm",
+  poster: "/hero/poster.jpg",
+  // Shown to screen readers + reduced-motion users:
+  alt: "A pet being gently groomed at The Pet Affaire studio in Santa Monica.",
+} as const;
+
 export const NAV = [
   { label: "Services", href: "/services" },
   { label: "Gallery", href: "/gallery" },
