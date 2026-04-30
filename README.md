@@ -85,12 +85,39 @@ Whatever you pick, also enable **email + push notifications** in the provider's 
 
 ## Forms — make sure you actually see submissions
 
-The contact form (`/contact`) and newsletter signup (footer) use **Netlify Forms** with a honeypot + reCAPTCHA. Once deployed to Netlify:
+Three forms use **Netlify Forms** with a honeypot + reCAPTCHA:
 
-- In the Netlify dashboard → Forms → set up email notifications **and** a Slack/Zapier webhook so submissions ping you in real time.
-- Optional but recommended: add a Zapier zap from "New Netlify form submission" → SMS via Twilio so you get a text instantly.
+- `/intake` — full new-client booking request (mirrors the old Tally form: owner info, multi-pet info, services, add-ons, preferred date & drop-off window). Up to 4 pets per submission.
+- `/contact` — short message form
+- Footer newsletter signup
+
+Once deployed to Netlify:
+
+1. **Forms tab → Notifications:** add email notifications for `intake` and `contact` to a real, monitored inbox (not a generic info@ that gets ignored). This is the fix for the "we don't see appointment requests on time" problem.
+2. **Add a Slack or Zapier webhook** for the same forms — submissions ping you instantly. A zap from "New Netlify submission" → SMS via Twilio gets you a text within seconds.
+3. Optional: forward `intake` submissions into your Cal.com event automatically with a Zapier or n8n workflow.
 
 If you're not on Netlify, swap to Formspree, Basin, or Web3Forms — same form HTML, just change the `action`.
+
+### Cal.com booking questions (mirror the intake form)
+
+If you'd rather collect intake at booking time inside Cal.com instead of `/intake`, configure these questions on your event type. Settings → Event type → "Booking questions":
+
+| Question | Type | Required |
+|---|---|---|
+| Pet's name | Short text | yes |
+| Species (Dog / Cat / Other) | Single select | yes |
+| Breed | Short text | yes |
+| Gender | Single select (Female spayed/intact, Male neutered/intact) | yes |
+| Weight (lbs) | Number | yes |
+| Age (1 yr / Young / Adult / Senior) | Single select | yes |
+| Allergies, medical conditions, special needs | Long text | no |
+| Personality / behavior notes | Long text | no |
+| Service requested | Multi select (Full Groom, Bath & Brush, Cat Grooming) | yes |
+| Add-ons | Multi select (Deep Ear, Teeth, De-Shed, Flea & Tick, Blueberry) | no |
+| Preferred drop-off window | Single select (7:30, 8:30, 9:30) | yes |
+
+`/intake` and Cal.com booking questions can also coexist — `/intake` for first-visit clients, Cal.com's shorter form for returning clients.
 
 ## Deployment
 

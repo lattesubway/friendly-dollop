@@ -19,11 +19,18 @@ const tallyUrl = "https://tally.so/r/REPLACE_ME";
 
 <BaseLayout title="Book an appointment" description="See live availability and book a grooming appointment at The Pet Affaire — Santa Monica.">
   <Section eyebrow="Book" title="Pick a time that works.">
-    <p class="-mt-6 mb-8 max-w-2xl text-black/70">
-      First-time clients: please choose <em>New client consult & groom</em> so we can build a little
-      buffer into the visit. You'll receive an email confirmation immediately and a reminder before
-      your appointment.
-    </p>
+    <div class="-mt-6 mb-8 max-w-2xl space-y-3 text-black/70">
+      <p>
+        Drop-off windows are <strong class="text-black">7:30 – 10:30 AM</strong>, pickup at
+        <strong class="text-black">2 PM</strong>. You'll receive an email confirmation immediately
+        and a reminder before your appointment.
+      </p>
+      <p class="text-sm">
+        First-time client? Use the <a class="underline" href="/intake">new-client intake form</a>
+        instead — it captures everything we need (your pet's age, breed, behavior notes, and the
+        services & add-ons you'd like) and emails us directly.
+      </p>
+    </div>
 
     {provider === "calcom" && (
       <div class="overflow-hidden rounded-3xl border border-black/10 bg-white">

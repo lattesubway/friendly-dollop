@@ -1,9 +1,8 @@
 ---
-title: "Cat Groom"
+title: "Cat Grooming"
 species: "cat"
-summary: "Low-stress, fear-free cat grooming by an appointment-only specialist."
-priceFrom: 110
-priceNote: "Based on coat length, condition, and temperament."
+summary: "Gentle lion cut, mat removal, bath if needed, nails and ears — low-stress for felines."
+priceNote: "Final price set in person — varies with coat length, condition, and temperament."
 duration: "60 – 120 minutes"
 order: 30
 featured: true
@@ -11,8 +10,8 @@ includes:
   - "Pre-groom assessment in a quiet, cat-only window"
   - "Comb-out or de-mat (no shave unless welfare requires)"
   - "Optional bath with cat-safe shampoo and warm towel dry"
+  - "Lion cut, comb cut, or full hand-comb"
   - "Nail trim, ear check, sanitary tidy"
-  - "Lion cut, comb cut, or full hand-comb available"
 faq:
   - q: "Do you sedate cats?"
     a: "No. Sedation is a vet decision, not a grooming one. We see one cat at a time in a quiet, dog-free window so most cats can be groomed without it. If your cat needs sedation, we'll refer you to a fear-free vet."

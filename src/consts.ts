@@ -44,3 +44,9 @@ export const NAV = [
   { label: "Journal", href: "/journal" },
   { label: "Contact", href: "/contact" },
 ] as const;
+
+// Booking sub-routes (used by Header + Footer to link to intake/book together).
+export const BOOK_LINKS = [
+  { label: "Online booking (intake form)", href: "/intake" },
+  { label: "Pick a time", href: "/book" },
+] as const;

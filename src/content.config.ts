@@ -13,6 +13,7 @@ const services = defineCollection({
     includes: z.array(z.string()).default([]),
     order: z.number().default(0),
     featured: z.boolean().default(false),
+    addOn: z.boolean().default(false),
     cover: z.string().optional(),
     faq: z
       .array(z.object({ q: z.string(), a: z.string() }))
