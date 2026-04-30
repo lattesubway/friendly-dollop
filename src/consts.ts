@@ -45,6 +45,39 @@ export const SITE = {
     "https://maps.apple.com/?daddr=3013+Lincoln+Boulevard,+Santa+Monica,+CA+90405",
 } as const;
 
+// ─── Fonts ────────────────────────────────────────────────────────────────
+// Change these to swap typography across the entire site.
+//
+// `family` is the typeface name as Google Fonts knows it.
+// `googleSpec` is the Google Fonts URL fragment (weights/axes you want loaded).
+// `fallback` is the system-font fallback chain.
+//
+// To try a different body font, browse https://fonts.google.com, pick one,
+// then replace `body` below. Examples (paste any of these into `body`):
+//
+//   Manrope:           family: "Manrope",       googleSpec: "Manrope:wght@400;500;600;700"
+//   Plus Jakarta Sans: family: "Plus Jakarta Sans", googleSpec: "Plus+Jakarta+Sans:wght@400;500;600;700"
+//   DM Sans:           family: "DM Sans",       googleSpec: "DM+Sans:wght@400;500;600;700"
+//   Karla:             family: "Karla",         googleSpec: "Karla:wght@400;500;600;700"
+//   Outfit:            family: "Outfit",        googleSpec: "Outfit:wght@400;500;600;700"
+//   Work Sans:         family: "Work Sans",     googleSpec: "Work+Sans:wght@400;500;600;700"
+//   Public Sans:       family: "Public Sans",   googleSpec: "Public+Sans:wght@400;500;600;700"
+//   Source Sans 3:     family: "Source Sans 3", googleSpec: "Source+Sans+3:wght@400;500;600;700"
+//   Geist:             family: "Geist",         googleSpec: "Geist:wght@400;500;600;700"
+//   Nunito:            family: "Nunito",        googleSpec: "Nunito:wght@400;500;600;700"
+export const FONTS = {
+  body: {
+    family: "Inter",
+    googleSpec: "Inter:wght@400;500;600;700",
+    fallback: 'ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
+  },
+  display: {
+    family: "Fraunces",
+    googleSpec: "Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600",
+    fallback: '"Cormorant Garamond", ui-serif, Georgia, "Times New Roman", serif',
+  },
+} as const;
+
 export const NAV = [
   { label: "Services", href: "/services" },
   { label: "Gallery", href: "/gallery" },
