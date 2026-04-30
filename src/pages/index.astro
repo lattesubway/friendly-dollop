@@ -14,6 +14,8 @@ const journal = (await getCollection("journal"))
   .filter((p) => !p.data.draft)
   .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime())
   .slice(0, 2);
+
+const reviewCount = (await getCollection("reviews")).length;
 ---
 
 <BaseLayout>
@@ -112,8 +114,13 @@ const journal = (await getCollection("journal"))
 
   <Section eyebrow="What clients say" title="Kind words from kind humans." bg="bone">
     <Reviews featuredOnly limit={3} />
-    <div class="mt-10">
-      <a href="/reviews" class="text-sm underline underline-offset-4 hover:text-black">Read more reviews →</a>
+    <div class="mt-10 flex flex-wrap gap-x-6 gap-y-2">
+      {reviewCount > 3 && (
+        <a href="/reviews" class="text-sm underline underline-offset-4 hover:text-black">Read all reviews →</a>
+      )}
+      <a href={SITE.social.google} class="text-sm underline underline-offset-4 hover:text-black">
+        {reviewCount > 3 ? "Leave a Google review" : "Leave a Google review →"}
+      </a>
     </div>
   </Section>
 
