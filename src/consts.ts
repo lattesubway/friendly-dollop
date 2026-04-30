@@ -67,8 +67,8 @@ export const SITE = {
 //   Nunito:            family: "Nunito",        googleSpec: "Nunito:wght@400;500;600;700"
 export const FONTS = {
   body: {
-    family: "Inter",
-    googleSpec: "Inter:wght@400;500;600;700",
+    family: "DM Sans",
+    googleSpec: "DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700",
     fallback: 'ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
   },
   display: {
