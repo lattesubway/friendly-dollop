@@ -18,6 +18,14 @@ export const SITE = {
     { day: "Tue – Sat", hours: "7:30 AM – 3:00 PM" },
     { day: "Sun – Mon", hours: "Closed" },
   ],
+  hoursDetailed: [
+    { day: "Tues",   hours: "7:30 AM – 3:00 PM" },
+    { day: "Wed",    hours: "7:30 AM – 3:00 PM" },
+    { day: "Thurs",  hours: "7:30 AM – 3:00 PM" },
+    { day: "Fri",    hours: "7:30 AM – 3:00 PM" },
+    { day: "Sat",    hours: "7:30 AM – 3:00 PM" },
+  ],
+  closedNote: "*Closed Sundays & Mondays",
   social: {
     instagram: "https://instagram.com/thepetaffaire",
     google: "https://www.google.com/search?q=The+Pet+Affaire+Santa+Monica",
