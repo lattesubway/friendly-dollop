@@ -1,0 +1,137 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Section from "@/components/Section.astro";
+import { SITE } from "@/consts";
+
+// Switch this to your real provider in src/consts.ts (calLink) once Cal.com is set up.
+// "calcom"   → Cal.com inline embed (open source, recommended)
+// "square"   → Square Appointments embed (free tier; closed source)
+// "calendly" → Calendly inline embed
+// "tally"    → Tally form (current setup, kept as a fallback)
+// "manual"   → Just a contact form / phone — no live calendar
+type BookingProvider = "calcom" | "square" | "calendly" | "tally" | "manual";
+const provider = "calcom" as BookingProvider;
+
+const squareUrl = "https://book.squareup.com/appointments/REPLACE_ME/site/REPLACE_ME";
+const calendlyUrl = "https://calendly.com/REPLACE_ME";
+const tallyUrl = "https://tally.so/r/REPLACE_ME";
+---
+
+<BaseLayout title="Book an appointment" description="See live availability and book a grooming appointment at The Pet Affaire — Santa Monica.">
+  <Section eyebrow="Book" title="Pick a time that works.">
+    <div class="-mt-6 mb-8 max-w-2xl space-y-3 text-black/70">
+      <p>
+        Drop-off windows are <strong class="text-black">7:30 – 10:30 AM</strong>, pickup at
+        <strong class="text-black">2 PM</strong>. You'll receive an email confirmation immediately
+        and a reminder before your appointment.
+      </p>
+      <p class="text-sm">
+        First-time client? Use the <a class="underline" href="/intake">new-client intake form</a>
+        instead — it captures everything we need (your pet's age, breed, behavior notes, and the
+        services & add-ons you'd like) and emails us directly.
+      </p>
+    </div>
+
+    {provider === "calcom" && (
+      <div class="overflow-hidden rounded-3xl border border-black/10 bg-white">
+        <div id="cal-inline" style="width:100%;height:760px;overflow:auto;"></div>
+        <script type="text/javascript" is:inline define:vars={{ calLink: SITE.calLink, calOrigin: SITE.calOrigin }}>
+          (function (C, A, L) {
+            let p = function (a, ar) { a.q.push(ar); };
+            let d = C.document;
+            C.Cal = C.Cal || function () {
+              let cal = C.Cal; let ar = arguments;
+              if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; }
+              if (ar[0] === L) {
+                const api = function () { p(api, arguments); };
+                const namespace = ar[1]; api.q = api.q || [];
+                if (typeof namespace === "string") { cal.ns[namespace] = cal.ns[namespace] || api; p(cal.ns[namespace], ar); p(cal, ["initNamespace", namespace]); }
+                else p(cal, ar); return;
+              }
+              p(cal, ar);
+            };
+          })(window, "https://app.cal.com/embed/embed.js", "init");
+          Cal("init", "groom", { origin: calOrigin });
+          Cal.ns.groom("inline", {
+            elementOrSelector: "#cal-inline",
+            calLink,
+            config: { layout: "month_view", theme: "light" },
+          });
+          Cal.ns.groom("ui", {
+            theme: "light",
+            cssVarsPerTheme: {
+              light: { "cal-brand": "#1c1a17" },
+            },
+            hideEventTypeDetails: false,
+            layout: "month_view",
+          });
+        </script>
+        <noscript>
+          <p class="p-6 text-sm">
+            Booking requires JavaScript. Please <a class="underline" href={SITE.bookingUrl}>open the booking page directly</a>
+            or call <a class="underline" href={SITE.phoneHref}>{SITE.phone}</a>.
+          </p>
+        </noscript>
+      </div>
+    )}
+
+    {provider === "square" && (
+      <div class="overflow-hidden rounded-3xl border border-black/10 bg-white">
+        <iframe
+          src={squareUrl}
+          title="Square Appointments"
+          loading="lazy"
+          referrerpolicy="strict-origin-when-cross-origin"
+          style="width:100%;border:0;height:900px;"
+        ></iframe>
+      </div>
+    )}
+
+    {provider === "calendly" && (
+      <div class="overflow-hidden rounded-3xl border border-black/10 bg-white">
+        <div
+          class="calendly-inline-widget"
+          data-url={`${calendlyUrl}?hide_event_type_details=0&hide_gdpr_banner=1&primary_color=1c1a17`}
+          style="min-width:320px;height:760px;"
+        ></div>
+        <script is:inline async src="https://assets.calendly.com/assets/external/widget.js"></script>
+      </div>
+    )}
+
+    {provider === "tally" && (
+      <div class="overflow-hidden rounded-3xl border border-black/10 bg-white">
+        <iframe
+          src={tallyUrl}
+          title="Tally form"
+          loading="lazy"
+          style="width:100%;border:0;height:900px;"
+        ></iframe>
+      </div>
+    )}
+
+    {provider === "manual" && (
+      <div class="rounded-3xl border border-black/10 bg-white p-8 md:p-10">
+        <p>
+          We're between booking systems. Email <a class="underline" href={`mailto:${SITE.email}`}>{SITE.email}</a>
+          or call <a class="underline" href={SITE.phoneHref}>{SITE.phone}</a> with two times that work and your pet's
+          name & breed. We'll confirm the same day.
+        </p>
+      </div>
+    )}
+
+    <div class="mt-10 grid gap-6 md:grid-cols-3 text-sm text-black/70">
+      <div>
+        <p class="text-xs uppercase tracking-[0.2em] text-black/50">First time</p>
+        <p class="mt-2">Bring proof of vaccinations (rabies + DHPP for dogs, FVRCP for cats).</p>
+      </div>
+      <div>
+        <p class="text-xs uppercase tracking-[0.2em] text-black/50">Cancellations</p>
+        <p class="mt-2">Free up to 24 hours before. Inside 24 hours, a 50% fee applies.</p>
+      </div>
+      <div>
+        <p class="text-xs uppercase tracking-[0.2em] text-black/50">Need help?</p>
+        <p class="mt-2"><a class="underline" href="/contact">Send a message</a> or call <a class="underline" href={SITE.phoneHref}>{SITE.phone}</a>.</p>
+      </div>
+    </div>
+  </Section>
+</BaseLayout>

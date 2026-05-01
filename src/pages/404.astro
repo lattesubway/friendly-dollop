@@ -1,0 +1,19 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="Not found" noindex>
+  <section class="mx-auto max-w-3xl px-6 py-32 text-center">
+    <p class="text-xs uppercase tracking-[0.22em] text-black/55">404</p>
+    <h1 class="mt-4 font-display text-5xl md:text-7xl leading-[1.02]">
+      The page slipped the leash.
+    </h1>
+    <p class="mt-6 text-black/70">It happens. Try one of these instead.</p>
+    <ul class="mt-8 flex flex-wrap justify-center gap-3 text-sm">
+      <li><a class="rounded-full bg-[var(--color-ink)] px-4 py-2 text-[var(--color-cream)]" href="/">Home</a></li>
+      <li><a class="rounded-full border border-black/15 px-4 py-2" href="/services">Services</a></li>
+      <li><a class="rounded-full border border-black/15 px-4 py-2" href="/book">Book</a></li>
+      <li><a class="rounded-full border border-black/15 px-4 py-2" href="/contact">Contact</a></li>
+    </ul>
+  </section>
+</BaseLayout>

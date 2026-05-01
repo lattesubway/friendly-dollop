@@ -1,0 +1,354 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Section from "@/components/Section.astro";
+import { SITE } from "@/consts";
+
+// Build a hidden static form so Netlify can detect every possible field
+// (including dynamically-added pet rows). Netlify needs to see field names
+// at build time. We register pet fields for up to 4 pets.
+const maxPets = 4;
+---
+
+<BaseLayout
+  title="New Client Intake"
+  description="Tell us about you and your pet so we can prepare the right visit. Replaces our old Tally form — submissions email us directly so nothing is missed."
+>
+  <Section eyebrow="Online booking" title="Welcome to The Pet Affaire.">
+    <div class="-mt-6 mb-10 max-w-2xl space-y-4 text-[16px] leading-relaxed text-black/75">
+      <p>
+        Thank you for choosing The Pet Affaire — we're so excited to welcome you and your pets.
+      </p>
+      <p>
+        To create and confirm your booking, please complete this short intake form. It helps us
+        gather the important details about you and your furry family members so we can prepare
+        the right experience for each of them.
+      </p>
+      <p class="text-sm text-black/55">
+        Drop-off windows are 7:30 – 10:30 AM. Pickup is at 2 PM.
+      </p>
+    </div>
+
+    <!-- Visible form. Netlify Forms binding via data-netlify="true" -->
+    <form
+      name="intake"
+      method="POST"
+      data-netlify="true"
+      data-netlify-recaptcha="true"
+      netlify-honeypot="bot-field"
+      action="/intake?sent=1"
+      class="space-y-12"
+      id="intake-form"
+    >
+      <input type="hidden" name="form-name" value="intake" />
+      <p class="hidden">
+        <label>Don't fill this out: <input name="bot-field" /></label>
+      </p>
+
+      <!-- Owner -->
+      <fieldset class="rounded-3xl border border-black/10 bg-white p-6 md:p-8">
+        <legend class="px-2 text-xs uppercase tracking-[0.22em] text-black/55">Owner's info</legend>
+        <div class="mt-2 grid gap-5 md:grid-cols-2">
+          <label class="block">
+            <span class="text-sm">First name *</span>
+            <input required name="owner_first_name" autocomplete="given-name" class="mt-1 w-full rounded-xl border border-black/15 bg-white px-3 py-2 focus:border-black/40 focus:outline-none" />
+          </label>
+          <label class="block">
+            <span class="text-sm">Last name *</span>
+            <input required name="owner_last_name" autocomplete="family-name" class="mt-1 w-full rounded-xl border border-black/15 bg-white px-3 py-2 focus:border-black/40 focus:outline-none" />
+          </label>
+          <label class="block">
+            <span class="text-sm">Phone number *</span>
+            <input required type="tel" name="owner_phone" autocomplete="tel" class="mt-1 w-full rounded-xl border border-black/15 bg-white px-3 py-2 focus:border-black/40 focus:outline-none" />
+          </label>
+          <label class="block">
+            <span class="text-sm">Email *</span>
+            <input required type="email" name="owner_email" autocomplete="email" class="mt-1 w-full rounded-xl border border-black/15 bg-white px-3 py-2 focus:border-black/40 focus:outline-none" />
+          </label>
+        </div>
+      </fieldset>
+
+      <!-- Pets -->
+      <fieldset class="rounded-3xl border border-black/10 bg-white p-6 md:p-8">
+        <legend class="px-2 text-xs uppercase tracking-[0.22em] text-black/55">Pet's info</legend>
+        <p class="mt-2 text-sm text-black/65">Add details for each pet. You can add up to {maxPets}.</p>
+
+        <div id="pets" class="mt-6 space-y-6">
+          <div class="pet-row rounded-2xl border border-black/10 p-5" data-pet-index="1">
+            <div class="flex items-center justify-between">
+              <p class="font-display text-lg">Pet 1</p>
+              <button type="button" class="hidden text-sm text-black/55 hover:text-black underline" data-remove-pet>Remove</button>
+            </div>
+            <div class="mt-4 grid gap-4 md:grid-cols-2">
+              <label class="block">
+                <span class="text-sm">Pet's name *</span>
+                <input required name="pet1_name" class="mt-1 w-full rounded-xl border border-black/15 bg-white px-3 py-2 focus:border-black/40 focus:outline-none" />
+              </label>
+              <label class="block">
+                <span class="text-sm">Species *</span>
+                <select required name="pet1_species" class="mt-1 w-full rounded-xl border border-black/15 bg-white px-3 py-2 focus:border-black/40 focus:outline-none">
+                  <option value="">Select…</option>
+                  <option>Dog</option>
+                  <option>Cat</option>
+                  <option>Other</option>
+                </select>
+              </label>
+              <label class="block">
+                <span class="text-sm">Breed *</span>
+                <input required name="pet1_breed" class="mt-1 w-full rounded-xl border border-black/15 bg-white px-3 py-2 focus:border-black/40 focus:outline-none" />
+              </label>
+              <label class="block">
+                <span class="text-sm">Gender *</span>
+                <select required name="pet1_gender" class="mt-1 w-full rounded-xl border border-black/15 bg-white px-3 py-2 focus:border-black/40 focus:outline-none">
+                  <option value="">Select…</option>
+                  <option>Female (spayed)</option>
+                  <option>Female (intact)</option>
+                  <option>Male (neutered)</option>
+                  <option>Male (intact)</option>
+                </select>
+              </label>
+              <label class="block">
+                <span class="text-sm">Weight (lbs) *</span>
+                <input required type="number" min="0" step="0.1" name="pet1_weight" class="mt-1 w-full rounded-xl border border-black/15 bg-white px-3 py-2 focus:border-black/40 focus:outline-none" />
+              </label>
+              <label class="block">
+                <span class="text-sm">Age *</span>
+                <select required name="pet1_age" class="mt-1 w-full rounded-xl border border-black/15 bg-white px-3 py-2 focus:border-black/40 focus:outline-none">
+                  <option value="">Select…</option>
+                  <option>1 year or under</option>
+                  <option>Young (2 – 4 years)</option>
+                  <option>Adult (5 – 8 years)</option>
+                  <option>Senior (9 years+)</option>
+                </select>
+              </label>
+            </div>
+            <label class="mt-4 block">
+              <span class="text-sm">Allergies, medical conditions, or special needs</span>
+              <textarea name="pet1_medical" rows="2" class="mt-1 w-full rounded-xl border border-black/15 bg-white px-3 py-2 focus:border-black/40 focus:outline-none"></textarea>
+            </label>
+            <label class="mt-3 block">
+              <span class="text-sm">Personality / behavior notes <span class="text-black/45">(optional but helpful)</span></span>
+              <textarea name="pet1_notes" rows="2" placeholder="e.g. loves belly rubs, nervous around loud noises…" class="mt-1 w-full rounded-xl border border-black/15 bg-white px-3 py-2 focus:border-black/40 focus:outline-none"></textarea>
+            </label>
+          </div>
+        </div>
+
+        <div class="mt-4">
+          <button type="button" id="add-pet" class="rounded-full border border-black/15 px-4 py-2 text-sm hover:border-black/40">
+            + Add another pet
+          </button>
+        </div>
+      </fieldset>
+
+      <!-- Services -->
+      <fieldset class="rounded-3xl border border-black/10 bg-white p-6 md:p-8">
+        <legend class="px-2 text-xs uppercase tracking-[0.22em] text-black/55">Services requested</legend>
+        <p class="mt-2 text-sm text-black/65">Pick the service(s) you'd like for your pet(s). *</p>
+        <ul class="mt-5 grid gap-3">
+          <li>
+            <label class="flex items-start gap-3 rounded-2xl border border-black/15 p-4 cursor-pointer hover:border-black/40 has-[:checked]:border-black has-[:checked]:bg-[var(--color-bone)]">
+              <input type="checkbox" name="services" value="Full Groom" class="mt-1" />
+              <span>
+                <span class="font-medium">Full Groom</span>
+                <span class="block text-sm text-black/65">Bath, haircut/style, nails, ears, glands, brush out — most popular for breed-specific looks.</span>
+              </span>
+            </label>
+          </li>
+          <li>
+            <label class="flex items-start gap-3 rounded-2xl border border-black/15 p-4 cursor-pointer hover:border-black/40 has-[:checked]:border-black has-[:checked]:bg-[var(--color-bone)]">
+              <input type="checkbox" name="services" value="Bath & Brush / Tidy-Up" class="mt-1" />
+              <span>
+                <span class="font-medium">Bath & Brush / Tidy-Up</span>
+                <span class="block text-sm text-black/65">Shampoo, blow-dry, brush, light trim, nails, ears — great for short coats or maintenance.</span>
+              </span>
+            </label>
+          </li>
+          <li>
+            <label class="flex items-start gap-3 rounded-2xl border border-black/15 p-4 cursor-pointer hover:border-black/40 has-[:checked]:border-black has-[:checked]:bg-[var(--color-bone)]">
+              <input type="checkbox" name="services" value="Cat Grooming" class="mt-1" />
+              <span>
+                <span class="font-medium">Cat Grooming</span>
+                <span class="block text-sm text-black/65">Gentle lion cut, mat removal, bath if needed, nails, ears — low-stress for felines.</span>
+              </span>
+            </label>
+          </li>
+        </ul>
+      </fieldset>
+
+      <!-- Add-ons -->
+      <fieldset class="rounded-3xl border border-black/10 bg-white p-6 md:p-8">
+        <legend class="px-2 text-xs uppercase tracking-[0.22em] text-black/55">Added extras</legend>
+        <p class="mt-2 text-sm text-black/65">Optional spa add-ons. Pricing may vary slightly with coat density and product use.</p>
+        <ul class="mt-5 grid gap-3 md:grid-cols-2">
+          {[
+            ["Deep Ear Cleaning & Soothing", "$12+", "Gentle cleaning with calming aloe solution"],
+            ["Fresh Breath Teeth Brushing", "$18+", "Enzyme toothpaste + dental wipe for fresher kisses"],
+            ["Ultimate De-Shedding Treatment", "$25+", "Premium de-shedding shampoo + fur-reducing conditioner"],
+            ["Flea & Tick Defense Bath", "$20+", "Gentle, vet-approved treatment for peace of mind"],
+            ["Blueberry Oatmeal Facial & Full Body Conditioning", "$15+", "Tearless face wash + full-body conditioning soak"],
+          ].map(([name, price, desc]) => (
+            <li>
+              <label class="flex items-start gap-3 rounded-2xl border border-black/15 p-4 cursor-pointer hover:border-black/40 has-[:checked]:border-black has-[:checked]:bg-[var(--color-bone)]">
+                <input type="checkbox" name="addons" value={name} class="mt-1" />
+                <span>
+                  <span class="flex items-baseline justify-between gap-3">
+                    <span class="font-medium">{name}</span>
+                    <span class="text-sm text-black/55">{price}</span>
+                  </span>
+                  <span class="block text-sm text-black/65">{desc}</span>
+                </span>
+              </label>
+            </li>
+          ))}
+        </ul>
+      </fieldset>
+
+      <!-- Appointment -->
+      <fieldset class="rounded-3xl border border-black/10 bg-white p-6 md:p-8">
+        <legend class="px-2 text-xs uppercase tracking-[0.22em] text-black/55">Preferred appointment</legend>
+        <p class="mt-2 text-sm text-black/65">
+          Drop-off windows start each day at 7:30 AM and run until 10:30 AM. Pickup at 2 PM.
+        </p>
+        <div class="mt-5 grid gap-5 md:grid-cols-2">
+          <label class="block">
+            <span class="text-sm">Preferred date *</span>
+            <input required type="date" name="preferred_date" class="mt-1 w-full rounded-xl border border-black/15 bg-white px-3 py-2 focus:border-black/40 focus:outline-none" />
+          </label>
+          <label class="block">
+            <span class="text-sm">Preferred drop-off window *</span>
+            <select required name="dropoff_window" class="mt-1 w-full rounded-xl border border-black/15 bg-white px-3 py-2 focus:border-black/40 focus:outline-none">
+              <option value="">Select…</option>
+              <option>7:30 – 8:30 AM</option>
+              <option>8:30 – 9:30 AM</option>
+              <option>9:30 – 10:30 AM</option>
+              <option>Any time within the window</option>
+            </select>
+          </label>
+        </div>
+        <label class="mt-5 block">
+          <span class="text-sm">Anything else we should know?</span>
+          <textarea name="notes" rows="3" class="mt-1 w-full rounded-xl border border-black/15 bg-white px-3 py-2 focus:border-black/40 focus:outline-none" placeholder="Reference photos, preferred groomer, anything you'd like us to keep in mind…"></textarea>
+        </label>
+
+        <div class="mt-6" data-netlify-recaptcha="true"></div>
+
+        <div class="mt-6 flex flex-col items-start justify-between gap-3 md:flex-row md:items-center">
+          <p class="text-xs text-black/55">
+            We confirm every booking by email or text within one business day.
+          </p>
+          <button type="submit" class="rounded-full bg-[var(--color-ink)] px-5 py-3 text-sm text-[var(--color-cream)] hover:bg-black">
+            Submit booking request
+          </button>
+        </div>
+      </fieldset>
+    </form>
+
+    <!-- Hidden duplicate form so Netlify can register every possible pet field. -->
+    <form name="intake" data-netlify="true" netlify-honeypot="bot-field" hidden>
+      <input type="hidden" name="form-name" value="intake" />
+      <input name="bot-field" />
+      <input name="owner_first_name" />
+      <input name="owner_last_name" />
+      <input name="owner_phone" />
+      <input name="owner_email" />
+      {Array.from({ length: maxPets }).map((_, i) => {
+        const n = i + 1;
+        return (
+          <>
+            <input name={`pet${n}_name`} />
+            <input name={`pet${n}_species`} />
+            <input name={`pet${n}_breed`} />
+            <input name={`pet${n}_gender`} />
+            <input name={`pet${n}_weight`} />
+            <input name={`pet${n}_age`} />
+            <input name={`pet${n}_medical`} />
+            <input name={`pet${n}_notes`} />
+          </>
+        );
+      })}
+      <input name="services" />
+      <input name="addons" />
+      <input name="preferred_date" />
+      <input name="dropoff_window" />
+      <input name="notes" />
+    </form>
+
+    <p id="thanks" class="mt-8 hidden rounded-2xl bg-[var(--color-sage)]/30 p-5" data-thanks>
+      <strong>Thanks — your request is in.</strong> We'll confirm by email or text within one business day.
+    </p>
+  </Section>
+
+  <script is:inline define:vars={{ maxPets }}>
+    const tpl = (n) => `
+      <div class="pet-row rounded-2xl border border-black/10 p-5" data-pet-index="${n}">
+        <div class="flex items-center justify-between">
+          <p class="font-display text-lg">Pet ${n}</p>
+          <button type="button" class="text-sm text-black/55 hover:text-black underline" data-remove-pet>Remove</button>
+        </div>
+        <div class="mt-4 grid gap-4 md:grid-cols-2">
+          <label class="block"><span class="text-sm">Pet's name *</span>
+            <input required name="pet${n}_name" class="mt-1 w-full rounded-xl border border-black/15 bg-white px-3 py-2 focus:border-black/40 focus:outline-none" /></label>
+          <label class="block"><span class="text-sm">Species *</span>
+            <select required name="pet${n}_species" class="mt-1 w-full rounded-xl border border-black/15 bg-white px-3 py-2 focus:border-black/40 focus:outline-none">
+              <option value="">Select…</option><option>Dog</option><option>Cat</option><option>Other</option></select></label>
+          <label class="block"><span class="text-sm">Breed *</span>
+            <input required name="pet${n}_breed" class="mt-1 w-full rounded-xl border border-black/15 bg-white px-3 py-2 focus:border-black/40 focus:outline-none" /></label>
+          <label class="block"><span class="text-sm">Gender *</span>
+            <select required name="pet${n}_gender" class="mt-1 w-full rounded-xl border border-black/15 bg-white px-3 py-2 focus:border-black/40 focus:outline-none">
+              <option value="">Select…</option><option>Female (spayed)</option><option>Female (intact)</option><option>Male (neutered)</option><option>Male (intact)</option></select></label>
+          <label class="block"><span class="text-sm">Weight (lbs) *</span>
+            <input required type="number" min="0" step="0.1" name="pet${n}_weight" class="mt-1 w-full rounded-xl border border-black/15 bg-white px-3 py-2 focus:border-black/40 focus:outline-none" /></label>
+          <label class="block"><span class="text-sm">Age *</span>
+            <select required name="pet${n}_age" class="mt-1 w-full rounded-xl border border-black/15 bg-white px-3 py-2 focus:border-black/40 focus:outline-none">
+              <option value="">Select…</option><option>1 year or under</option><option>Young (2 – 4 years)</option><option>Adult (5 – 8 years)</option><option>Senior (9 years+)</option></select></label>
+        </div>
+        <label class="mt-4 block"><span class="text-sm">Allergies, medical conditions, or special needs</span>
+          <textarea name="pet${n}_medical" rows="2" class="mt-1 w-full rounded-xl border border-black/15 bg-white px-3 py-2 focus:border-black/40 focus:outline-none"></textarea></label>
+        <label class="mt-3 block"><span class="text-sm">Personality / behavior notes</span>
+          <textarea name="pet${n}_notes" rows="2" class="mt-1 w-full rounded-xl border border-black/15 bg-white px-3 py-2 focus:border-black/40 focus:outline-none"></textarea></label>
+      </div>
+    `;
+
+    const pets = document.getElementById("pets");
+    const addBtn = document.getElementById("add-pet");
+    const renumber = () => {
+      [...pets.querySelectorAll(".pet-row")].forEach((row, i) => {
+        const n = i + 1;
+        row.setAttribute("data-pet-index", String(n));
+        const heading = row.querySelector("p");
+        if (heading) heading.textContent = `Pet ${n}`;
+      });
+    };
+
+    addBtn?.addEventListener("click", () => {
+      const count = pets.querySelectorAll(".pet-row").length;
+      if (count >= maxPets) {
+        addBtn.disabled = true;
+        return;
+      }
+      const wrap = document.createElement("div");
+      wrap.innerHTML = tpl(count + 1).trim();
+      pets.appendChild(wrap.firstChild);
+      if (count + 1 >= maxPets) addBtn.disabled = true;
+    });
+
+    pets?.addEventListener("click", (e) => {
+      const t = e.target;
+      if (t instanceof HTMLElement && t.matches("[data-remove-pet]")) {
+        const row = t.closest(".pet-row");
+        if (pets.querySelectorAll(".pet-row").length > 1) {
+          row?.remove();
+          renumber();
+          if (addBtn) addBtn.disabled = false;
+        }
+      }
+    });
+
+    if (new URL(window.location.href).searchParams.get("sent") === "1") {
+      const el = document.querySelector("[data-thanks]");
+      el?.classList.remove("hidden");
+      const form = document.getElementById("intake-form");
+      form?.reset();
+      el?.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  </script>
+</BaseLayout>

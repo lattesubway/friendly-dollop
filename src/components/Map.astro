@@ -1,0 +1,51 @@
+---
+import { SITE } from "@/consts";
+
+interface Props {
+  title?: string;
+  height?: string;
+  rounded?: boolean;
+  showActions?: boolean;
+}
+
+const {
+  title = `Map to ${SITE.name}`,
+  height = "420px",
+  rounded = true,
+  showActions = true,
+} = Astro.props;
+---
+
+<figure class={`relative overflow-hidden ${rounded ? "rounded-3xl" : ""} border border-black/10 bg-[var(--color-bone)]`}>
+  <iframe
+    title={title}
+    src={SITE.mapEmbedSrc}
+    loading="lazy"
+    referrerpolicy="no-referrer-when-downgrade"
+    allowfullscreen
+    style={`width:100%;height:${height};border:0;display:block;`}
+  ></iframe>
+  {showActions && (
+    <figcaption class="flex flex-wrap items-center justify-between gap-3 border-t border-black/10 bg-white px-5 py-3 text-sm">
+      <span class="text-black/70">{SITE.address.street} · {SITE.address.city}, {SITE.address.region}</span>
+      <span class="flex flex-wrap gap-2">
+        <a
+          class="rounded-full border border-black/15 px-3 py-1 hover:border-black/40"
+          href={SITE.mapDirectionsGoogle}
+          target="_blank"
+          rel="noopener"
+        >
+          Google Maps
+        </a>
+        <a
+          class="rounded-full border border-black/15 px-3 py-1 hover:border-black/40"
+          href={SITE.mapDirectionsApple}
+          target="_blank"
+          rel="noopener"
+        >
+          Apple Maps
+        </a>
+      </span>
+    </figcaption>
+  )}
+</figure>

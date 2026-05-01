@@ -1,0 +1,212 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Section from "@/components/Section.astro";
+import Reviews from "@/components/Reviews.astro";
+import Map from "@/components/Map.astro";
+import HeroMedia from "@/components/HeroMedia.astro";
+import { getCollection } from "astro:content";
+import { SITE } from "@/consts";
+
+const services = (await getCollection("services"))
+  .filter((s) => s.data.featured && !s.data.addOn)
+  .sort((a, b) => a.data.order - b.data.order);
+
+const journal = (await getCollection("journal"))
+  .filter((p) => !p.data.draft)
+  .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime())
+  .slice(0, 2);
+
+const reviewCount = (await getCollection("reviews")).length;
+---
+
+<BaseLayout>
+  <section class="relative">
+    <div class="mx-auto grid max-w-7xl gap-12 px-6 py-20 md:grid-cols-12 md:px-10 md:py-28">
+      <div class="md:col-span-7 reveal">
+        <p class="text-xs uppercase tracking-[0.22em] text-black/55">Santa Monica · Est. cared for</p>
+        <h1 class="mt-5 font-display text-5xl leading-[1.02] md:text-7xl">
+          Gentle Grooming.<br class="hidden md:block" />
+          <span class="italic text-[var(--color-clay)]">Tail-Wagging Results.</span>
+        </h1>
+        <p class="mt-8 text-xs uppercase tracking-[0.22em] text-[var(--color-clay)]">Our Pet Affaire Promise</p>
+        <p class="mt-3 max-w-xl text-lg text-black/75">
+          From shy rescues to high-energy pups, we meet every pet exactly where they are. We
+          gently adjust our pace, touch, and handling with patience and empathy, creating a calm,
+          loving experience that builds trust — one groom at a time.
+        </p>
+        <p class="mt-5 max-w-xl font-display text-xl md:text-2xl italic leading-snug text-black/85">
+          Grooming That Respects.<br />Every Pet. Every Time.
+        </p>
+        <div class="mt-8 flex flex-wrap gap-3">
+          <a href="/book" class="inline-flex items-center rounded-full bg-[var(--color-ink)] px-5 py-3 text-sm text-[var(--color-cream)] hover:bg-black">
+            Book an appointment
+          </a>
+          <a href="/services" class="inline-flex items-center rounded-full border border-black/15 px-5 py-3 text-sm hover:border-black/40">
+            See services & pricing
+          </a>
+        </div>
+        <div class="mt-12 grid max-w-xl gap-10 sm:grid-cols-2">
+          <div>
+            <p class="text-xs uppercase tracking-[0.22em] text-black/55">We're open</p>
+            <ul class="mt-3 space-y-1 text-sm">
+              {SITE.hoursDetailed.map((h) => (
+                <li class="flex justify-between gap-6">
+                  <span class="font-medium">{h.day}</span>
+                  <span class="text-black/65">{h.hours}</span>
+                </li>
+              ))}
+            </ul>
+            <p class="mt-3 text-xs italic text-black/55">{SITE.closedNote}</p>
+          </div>
+          <div class="flex flex-col items-start justify-end">
+            <p class="text-xs uppercase tracking-[0.22em] text-black/55">Call to schedule</p>
+            <a
+              href={SITE.phoneHref}
+              class="mt-3 inline-flex items-center gap-2 rounded-full border border-black/15 px-5 py-3 text-base hover:border-black/40 hover:bg-white"
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.86 19.86 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.86 19.86 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/>
+              </svg>
+              <span class="font-medium">{SITE.phone}</span>
+            </a>
+            <p class="mt-2 text-xs text-black/55">Or <a class="underline" href="/intake">fill out the booking form</a>.</p>
+          </div>
+        </div>
+      </div>
+
+      <aside class="md:col-span-5 md:pl-6 reveal">
+        <HeroMedia />
+      </aside>
+    </div>
+  </section>
+
+  <Section
+    eyebrow="What we do"
+    title="A short list of services, done very well."
+    intro="Every visit includes a coat assessment, a calm intro, and a finish that's hand-checked before your pet leaves."
+    bg="bone"
+  >
+    <ul class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      {services.map((s) => (
+        <li>
+          <a href={`/services/${s.id}/`} class="group flex h-full flex-col rounded-2xl border border-black/10 bg-white p-6 transition hover:-translate-y-0.5 hover:shadow-md">
+            <div class="flex items-start justify-between gap-4">
+              <h3 class="font-display text-2xl group-hover:underline">{s.data.title}</h3>
+              <span class="rounded-full border border-black/10 px-2 py-0.5 text-[11px] uppercase tracking-wider text-black/55">
+                {s.data.species === "both" ? "all" : s.data.species}
+              </span>
+            </div>
+            <p class="mt-3 flex-1 text-sm text-black/70">{s.data.summary}</p>
+            <p class="mt-5 text-sm">
+              {s.data.duration && <span class="text-black/55">{s.data.duration}</span>}
+            </p>
+          </a>
+        </li>
+      ))}
+    </ul>
+    <div class="mt-10">
+      <a href="/services" class="text-sm underline underline-offset-4 hover:text-black">All services & pricing →</a>
+    </div>
+  </Section>
+
+  <Section eyebrow="What we stand for" title="It's more than just grooming. It's our art form.">
+    <div class="grid gap-10 md:grid-cols-3 text-[15px] leading-relaxed text-black/75">
+      <div>
+        <p class="text-xs uppercase tracking-[0.22em] text-[var(--color-clay)]">Gentle &amp; safe</p>
+        <h3 class="mt-2 font-display text-xl text-black">Comfort first, every visit.</h3>
+        <p class="mt-3">Calm rooms, slow handling, and one pet at a time so cats and dogs feel safe — not stressed. No all-day waits, no rushed hands.</p>
+      </div>
+      <div>
+        <p class="text-xs uppercase tracking-[0.22em] text-[var(--color-clay)]">Precision &amp; craft</p>
+        <h3 class="mt-2 font-display text-xl text-black">Hand-finished by experienced groomers.</h3>
+        <p class="mt-3">Reputation built groom by groom. Scissor finishing on every cut, a real eye for line and proportion, and the patience to do it right — because grooming, done well, is an art form.</p>
+      </div>
+      <div>
+        <p class="text-xs uppercase tracking-[0.22em] text-[var(--color-clay)]">Community &amp; value</p>
+        <h3 class="mt-2 font-display text-xl text-black">Honest prices for high-end work.</h3>
+        <p class="mt-3">We've been part of this neighborhood for decades and we want to stay accessible. Quality stays high, prices stay fair, and you'll always know what you're paying for before we start.</p>
+      </div>
+    </div>
+  </Section>
+
+  <Section eyebrow="What clients say" title="Kind words from kind humans." bg="bone">
+    <Reviews featuredOnly limit={3} />
+    <div class="mt-10 flex flex-wrap gap-x-6 gap-y-2">
+      {reviewCount > 3 && (
+        <a href="/reviews" class="text-sm underline underline-offset-4 hover:text-black">Read all reviews →</a>
+      )}
+      <a href={SITE.social.google} class="text-sm underline underline-offset-4 hover:text-black">
+        {reviewCount > 3 ? "Leave a Google review" : "Leave a Google review →"}
+      </a>
+    </div>
+  </Section>
+
+  <Section eyebrow="From the journal" title="Notes from the studio.">
+    <ul class="grid gap-8 md:grid-cols-2">
+      {journal.map((p) => (
+        <li>
+          <a href={`/journal/${p.id}`} class="group block rounded-2xl border border-black/10 bg-white p-6 transition hover:-translate-y-0.5 hover:shadow-md">
+            <p class="text-xs uppercase tracking-[0.2em] text-black/50">
+              {p.data.pubDate.toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" })}
+            </p>
+            <h3 class="mt-3 font-display text-2xl group-hover:underline">{p.data.title}</h3>
+            <p class="mt-3 text-sm text-black/70">{p.data.description}</p>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </Section>
+
+  <Section eyebrow="Visit" title="3013 Lincoln Boulevard." bg="bone">
+    <div class="grid items-stretch gap-10 md:grid-cols-12">
+      <div class="md:col-span-7">
+        <Map height="380px" />
+      </div>
+      <div class="md:col-span-5 flex flex-col justify-between">
+        <div class="space-y-5 text-[15px] leading-relaxed text-black/75">
+          <div>
+            <p class="text-xs uppercase tracking-[0.22em] text-black/55">Address</p>
+            <p class="mt-2">3013 Lincoln Boulevard<br />Santa Monica, CA 90405</p>
+          </div>
+          <div>
+            <p class="text-xs uppercase tracking-[0.22em] text-black/55">Hours</p>
+            <ul class="mt-2 space-y-1">
+              {SITE.hours.map((h) => (
+                <li class="flex justify-between gap-6"><span>{h.day}</span><span class="text-black/55">{h.hours}</span></li>
+              ))}
+            </ul>
+          </div>
+          <div>
+            <p class="text-xs uppercase tracking-[0.22em] text-black/55">Reach us</p>
+            <p class="mt-2">
+              <a class="hover:underline" href={SITE.phoneHref}>{SITE.phone}</a>
+            </p>
+          </div>
+        </div>
+        <div class="mt-6 flex flex-wrap gap-2">
+          <a href={SITE.mapDirectionsGoogle} class="rounded-full border border-black/15 px-4 py-2 text-sm hover:border-black/40">Get directions</a>
+          <a href="/contact" class="rounded-full border border-black/15 px-4 py-2 text-sm hover:border-black/40">Contact</a>
+        </div>
+      </div>
+    </div>
+  </Section>
+
+  <Section bg="ink">
+    <div class="grid items-center gap-8 md:grid-cols-2">
+      <div>
+        <h2 class="font-display text-4xl md:text-5xl leading-tight">Ready when you are.</h2>
+        <p class="mt-4 max-w-md text-current/75">
+          Real-time availability, automatic confirmations, and reminders so nothing slips.
+        </p>
+      </div>
+      <div class="flex flex-wrap gap-3 md:justify-end">
+        <a href="/book" class="rounded-full bg-[var(--color-cream)] px-5 py-3 text-sm text-[var(--color-ink)] hover:bg-white">
+          Book an appointment
+        </a>
+        <a href={SITE.phoneHref} class="rounded-full border border-white/30 px-5 py-3 text-sm hover:border-white/70">
+          Call {SITE.phone}
+        </a>
+      </div>
+    </div>
+  </Section>
+</BaseLayout>

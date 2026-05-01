@@ -1,0 +1,92 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Section from "@/components/Section.astro";
+
+// Real photos from the studio. Drop matching files into `public/gallery/`.
+// Captions are intentionally short — the photos do the talking.
+// Mark `feature: true` to make a tile span 2x2 in the responsive grid.
+const items = [
+  {
+    src: "/gallery/01-pom-portrait.jpg",
+    alt: "Cream Pomeranian standing under a wooden table, freshly fluffed.",
+    caption: "Pom · freshly fluffed",
+    feature: true,
+  },
+  {
+    src: "/gallery/02-pom-sitting.jpg",
+    alt: "Cream Pomeranian sitting upright on a patterned rug.",
+    caption: "Pom · sitting pretty",
+  },
+  {
+    src: "/gallery/03-boston-terrier.jpg",
+    alt: "Boston Terrier wearing a gold chain with a 'B' charm.",
+    caption: "Boston Terrier · personality",
+  },
+  {
+    src: "/gallery/04-collie-market.jpg",
+    alt: "Black and white shepherd mix sitting calmly at the Santa Monica farmers market after a groom.",
+    caption: "Out and about, post-groom",
+  },
+  {
+    src: "/gallery/05-pups-grass.jpg",
+    alt: "Two small dogs relaxing on artificial grass after their grooming appointment.",
+    caption: "Friends, post-spa",
+  },
+  {
+    src: "/gallery/06-tabby-cat.jpg",
+    alt: "Long-haired tabby cat with green eyes, freshly groomed, sitting upright.",
+    caption: "Long-haired tabby · post-groom",
+  },
+  {
+    src: "/gallery/07-dachshund.jpg",
+    alt: "Black and tan dapple dachshund sitting on a bed.",
+    caption: "Dachshund · sleek & shiny",
+  },
+  {
+    src: "/gallery/08-persian-chair.jpg",
+    alt: "White Persian cat sitting on an ornate silver tufted chair.",
+    caption: "Persian · royalty",
+    feature: true,
+  },
+  {
+    src: "/gallery/09-poodle-holiday.jpg",
+    alt: "White poodle sitting next to a lit Christmas tree, photographed in black and white.",
+    caption: "Holiday poodle",
+  },
+  {
+    src: "/gallery/10-pom-mix.jpg",
+    alt: "Black and tan Pomeranian mix with bright eyes, sitting on a wood floor.",
+    caption: "Pom mix · bright eyes",
+  },
+];
+---
+
+<BaseLayout title="Gallery" description="Recent grooms from The Pet Affaire studio in Santa Monica — cats, dogs, and the occasional very good face.">
+  <Section eyebrow="Gallery" title="Recent grooms.">
+    <ul class="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 auto-rows-[minmax(0,1fr)]">
+      {items.map((it, i) => (
+        <li class={`overflow-hidden rounded-2xl bg-[var(--color-bone)] ${it.feature ? "col-span-2 row-span-2" : ""}`}>
+          <figure class="group relative h-full">
+            <img
+              src={it.src}
+              alt={it.alt}
+              loading={i < 4 ? "eager" : "lazy"}
+              decoding="async"
+              class="block h-full w-full object-cover aspect-square transition duration-500 group-hover:scale-[1.02]"
+              onerror="this.style.opacity='0';this.parentElement.querySelector('[data-fallback]').style.display='flex';"
+            />
+            <div data-fallback class="absolute inset-0 hidden items-center justify-center bg-gradient-to-br from-[var(--color-rose)] via-[var(--color-bone)] to-[var(--color-sage)]">
+              <span class="font-display text-sm text-black/40">{it.caption}</span>
+            </div>
+            <figcaption class="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/60 to-transparent p-3 text-[11px] uppercase tracking-wider text-white opacity-0 transition group-hover:opacity-100">
+              {it.caption}
+            </figcaption>
+          </figure>
+        </li>
+      ))}
+    </ul>
+    <p class="mt-10 text-sm text-black/60">
+      Want to see your pet here? Tag us on Instagram <a href="https://instagram.com/thepetaffaire" class="underline">@thepetaffaire</a>.
+    </p>
+  </Section>
+</BaseLayout>

@@ -1,0 +1,85 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Section from "@/components/Section.astro";
+---
+
+<BaseLayout title="About" description="A neighborhood grooming studio in Santa Monica — gentle handling, expert finish, fair prices. For cats, dogs, and the families who love them.">
+  <Section eyebrow="A little about us" title="We call our spa &lsquo;The Pet Affaire&rsquo;.">
+    <div class="grid gap-12 md:grid-cols-12">
+      <div class="md:col-span-7 space-y-5 text-[17px] leading-relaxed text-black/80">
+        <p class="font-display text-2xl text-black/85 italic">
+          It's more than just grooming. It's our art form.
+        </p>
+        <p>
+          The Pet Affaire is a small grooming studio in Santa Monica, and we've been part of this
+          neighborhood for a long time. The work hasn't changed because the things we care about
+          haven't changed: how the pet feels, how the groom looks, and whether you can afford to
+          come back.
+        </p>
+        <p>
+          <strong class="text-black">Gentle, safe, calm.</strong> The first job is always how the
+          animal feels. We work slowly, read the pet in front of us, and stop when stopping is the
+          right call. One pet at a time, no all-day waits, no rushed hands. Cats get their own
+          quiet windows — no dog noise, no rush, no stranger touching them before they're ready.
+        </p>
+        <p>
+          <strong class="text-black">Precision and craft.</strong> Our groomers have built a
+          reputation one dog and one cat at a time. Scissor finishing on every cut, a real eye for
+          line and proportion, and the patience to do it right.
+        </p>
+        <p>
+          <strong class="text-black">Community and fair value.</strong> We've watched a lot of pet
+          spas in Los Angeles drift toward assembly-line work at boutique prices. We've gone the
+          other direction: keep the quality high, keep the prices honest, treat every client like
+          a neighbor. Most of ours have been with us for years — some for decades.
+        </p>
+      </div>
+      <aside class="md:col-span-5">
+        <div class="aspect-[4/5] rounded-3xl bg-gradient-to-br from-[var(--color-sage)] via-[var(--color-bone)] to-[var(--color-rose)]"></div>
+      </aside>
+    </div>
+  </Section>
+
+  <Section eyebrow="Our Pet Affaire Promise" title="Calm hands. Glowing coats. Trust that builds, one groom at a time." bg="bone">
+    <ul class="grid gap-6 md:grid-cols-3">
+      <li class="rounded-3xl border border-black/10 bg-white p-7">
+        <p class="text-xs uppercase tracking-[0.22em] text-[var(--color-clay)]">Hypoallergenic care</p>
+        <h3 class="mt-3 font-display text-2xl">Top-tier products, tailored.</h3>
+        <p class="mt-3 text-[15px] leading-relaxed text-black/75">
+          We use hypoallergenic, top-tier grooming products chosen to meet your pet's specific
+          sensitivities — from the shampoo on their skin to the conditioner left in.
+        </p>
+      </li>
+      <li class="rounded-3xl border border-black/10 bg-white p-7">
+        <p class="text-xs uppercase tracking-[0.22em] text-[var(--color-clay)]">Spa, not assembly line</p>
+        <h3 class="mt-3 font-display text-2xl">They leave glowing.</h3>
+        <p class="mt-3 text-[15px] leading-relaxed text-black/75">
+          From deep conditioning treatments to calming aromatherapy rinses, your pet leaves the
+          studio softer, brighter, and more relaxed than when they arrived.
+        </p>
+      </li>
+      <li class="rounded-3xl border border-black/10 bg-white p-7">
+        <p class="text-xs uppercase tracking-[0.22em] text-[var(--color-clay)]">Empathy, always</p>
+        <h3 class="mt-3 font-display text-2xl">We meet pets where they are.</h3>
+        <p class="mt-3 text-[15px] leading-relaxed text-black/75">
+          From shy rescues to high-energy pups, we adjust our pace and handling with empathy.
+          Our calm, loving process builds trust — one groom at a time.
+        </p>
+      </li>
+    </ul>
+    <p class="mt-12 font-display text-2xl md:text-3xl italic text-black/85 max-w-3xl">
+      Grooming That Respects. Every Pet. Every Time.
+    </p>
+  </Section>
+
+  <Section eyebrow="Our promises" title="What we'll always do.">
+    <ul class="grid gap-6 md:grid-cols-2 text-[15px] leading-relaxed text-black/75">
+      <li><strong class="text-black">One pet at a time.</strong> No barking room, no kennel waits — just full attention on your pet.</li>
+      <li><strong class="text-black">Hand-finished.</strong> Scissor finishing on every cut, every time.</li>
+      <li><strong class="text-black">Honest pricing.</strong> If a groom is going to cost more, you'll hear it before we begin — never after.</li>
+      <li><strong class="text-black">Welfare-first.</strong> If a groom isn't safe to finish, we stop and explain why. We don't push through for the sake of a finished cut.</li>
+      <li><strong class="text-black">Cat-only windows.</strong> Dog-free, quiet, calm — because cats deserve that.</li>
+      <li><strong class="text-black">Open communication.</strong> Real-time texts on arrival, mid-groom, and ready-for-pickup so nothing surprises you.</li>
+    </ul>
+  </Section>
+</BaseLayout>
