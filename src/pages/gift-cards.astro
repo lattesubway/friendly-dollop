@@ -3,40 +3,39 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 import Section from "@/components/Section.astro";
 import { SITE } from "@/consts";
 
-// Replace with your provider's checkout URL once set up.
-// Square Online (free) and Stripe Payment Links both work; pick one.
-const giftCardUrl = "https://checkout.square.site/REPLACE_ME";
 const denominations = [50, 75, 100, 150, 200, 250];
+const giftMailto = `mailto:${SITE.email}?subject=${encodeURIComponent("Gift card request")}&body=${encodeURIComponent(
+  "Hi! I'd like to buy a gift card.\n\nAmount: $\nRecipient name:\nRecipient email (for digital delivery):\nMessage to include:\n\nThanks!"
+)}`;
 ---
 
-<BaseLayout title="Gift Cards" description="Give the gift of a calm groom. Digital gift cards for The Pet Affaire — Santa Monica.">
+<BaseLayout title="Gift Cards" description="Give the gift of a calm groom. Gift cards for The Pet Affaire — Santa Monica.">
   <Section eyebrow="Gift cards" title="Give a calm groom.">
     <div class="grid gap-12 md:grid-cols-12">
       <div class="md:col-span-6 space-y-5 text-[17px] leading-relaxed text-black/80">
         <p>
-          Digital gift cards arrive by email and can be redeemed against any service — full grooms,
-          baths, cat appointments, or add-ons.
-        </p>
-        <p>
-          Need a gift wrapped in something more tangible? Email us at
-          <a class="underline" href={`mailto:${SITE.email}`}>{SITE.email}</a> and we'll send a printed
-          card to your address.
+          Gift cards are redeemable against any service — full grooms, baths, cat appointments,
+          or add-ons. Common amounts:
         </p>
         <ul class="grid grid-cols-3 gap-3 max-w-md">
           {denominations.map((d) => (
             <li>
-              <a
-                href={`${giftCardUrl}?amount=${d}`}
-                class="flex aspect-[3/2] items-center justify-center rounded-2xl border border-black/10 bg-white text-lg font-medium hover:-translate-y-0.5 hover:shadow-md transition"
-              >
+              <div class="flex aspect-[3/2] items-center justify-center rounded-2xl border border-black/10 bg-white text-lg font-medium">
                 ${d}
-              </a>
+              </div>
             </li>
           ))}
         </ul>
+        <p>
+          To purchase, email us at
+          <a class="underline" href={`mailto:${SITE.email}`}>{SITE.email}</a>
+          or call <a class="underline" href={SITE.phoneHref}>{SITE.phone}</a> with the amount,
+          recipient name, and an email address (for digital delivery) or a mailing address (for a
+          printed card). We'll send the card and an invoice the same day.
+        </p>
         <p class="pt-2">
-          <a href={giftCardUrl} class="inline-flex items-center rounded-full bg-[var(--color-ink)] px-5 py-3 text-sm text-[var(--color-cream)] hover:bg-black">
-            Buy a gift card
+          <a href={giftMailto} class="inline-flex items-center rounded-full bg-[var(--color-ink)] px-5 py-3 text-sm text-[var(--color-cream)] hover:bg-black">
+            Email us to buy a gift card
           </a>
         </p>
       </div>

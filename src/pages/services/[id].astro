@@ -179,7 +179,7 @@ const breadcrumbSchema = {
       <ul class="grid gap-6 md:grid-cols-3">
         {related.map((r) => (
           <li>
-            <a href={`/services/${r.id}`} class="group block rounded-2xl border border-black/10 bg-white p-6 transition hover:-translate-y-0.5 hover:shadow-md">
+            <a href={`/services/${r.id}/`} class="group block rounded-2xl border border-black/10 bg-white p-6 transition hover:-translate-y-0.5 hover:shadow-md">
               <h3 class="font-display text-2xl group-hover:underline">{r.data.title}</h3>
               <p class="mt-2 text-sm text-black/70">{r.data.summary}</p>
               {r.data.priceFrom && (
