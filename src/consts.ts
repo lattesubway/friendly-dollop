@@ -86,9 +86,9 @@ export const FONTS = {
 //   "video"        a looping muted clip (set `mp4`, optional `webm`, optional `poster`)
 //
 // HOW TO USE A VIDEO CLIP:
-//   1. Drop your file into the repo at  public/hero/clip.mp4
+//   1. Drop your file into the repo at  public/hero/video.mp4
 //   2. (Optional but recommended) export a `.webm` too for smaller file sizes
-//      in Chrome/Firefox: `public/hero/clip.webm`
+//      in Chrome/Firefox: `public/hero/video.webm`
 //   3. (Recommended) export a still frame as `public/hero/poster.jpg` —
 //      it shows instantly while the video buffers and is shown to users
 //      with `prefers-reduced-motion` enabled.
@@ -101,12 +101,12 @@ export const FONTS = {
 //   • iPhone "Slo-mo" or any well-lit phone clip works great
 //   • Avoid sudden cuts / flashes; viewers will see a calm loop
 export const HERO_MEDIA = {
-  kind: "placeholder" as "placeholder" | "image" | "video",
+  kind: "video" as "placeholder" | "image" | "video",
   // For "image" mode:
   image: "/hero/photo.jpg",
   // For "video" mode:
-  mp4: "/hero/clip.mp4",
-  webm: "/hero/clip.webm",
+  mp4: "/hero/video.mp4",
+  webm: "/hero/video.webm",
   poster: "/hero/poster.jpg",
   // Shown to screen readers + reduced-motion users:
   alt: "A pet being gently groomed at The Pet Affaire studio in Santa Monica.",

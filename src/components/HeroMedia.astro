@@ -22,14 +22,20 @@ const kind = HERO_MEDIA.kind;
   )}
 
   {/* Fallback for reduced-motion users when kind is "video" */}
-  {kind === "video" && HERO_MEDIA.poster && (
-    <img
-      src={HERO_MEDIA.poster}
-      alt={HERO_MEDIA.alt}
-      class="hidden h-full w-full object-cover motion-reduce:block"
-      loading="eager"
-      decoding="async"
-    />
+  {kind === "video" && (
+    HERO_MEDIA.poster ? (
+      <img
+        src={HERO_MEDIA.poster}
+        alt={HERO_MEDIA.alt}
+        class="hidden h-full w-full object-cover motion-reduce:block"
+        loading="eager"
+        decoding="async"
+      />
+    ) : (
+      <div class="hidden h-full w-full items-center justify-center bg-gradient-to-br from-[var(--color-rose)] via-[var(--color-bone)] to-[var(--color-sage)] motion-reduce:flex">
+        <span class="font-display text-2xl text-black/40">[ studio video ]</span>
+      </div>
+    )
   )}
 
   {kind === "image" && HERO_MEDIA.image && (
