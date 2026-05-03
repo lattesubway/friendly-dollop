@@ -2,12 +2,14 @@
 import { HERO_MEDIA } from "@/consts";
 
 const kind = HERO_MEDIA.kind;
+const captions = "captions" in HERO_MEDIA ? HERO_MEDIA.captions : [];
+const hasCaptions = kind === "video" && captions.length > 0;
 ---
 
-<div class="aspect-[4/5] w-full overflow-hidden rounded-3xl bg-[var(--color-bone)]">
+<div class="relative aspect-[4/5] w-full overflow-hidden rounded-3xl bg-[var(--color-bone)]">
   {kind === "video" && (
     <video
-      class="block h-full w-full object-cover motion-reduce:hidden"
+      class="hero-video block h-full w-full object-cover motion-reduce:hidden"
       autoplay
       muted
       loop
@@ -19,6 +21,12 @@ const kind = HERO_MEDIA.kind;
       {HERO_MEDIA.webm && <source src={HERO_MEDIA.webm} type="video/webm" />}
       {HERO_MEDIA.mp4 && <source src={HERO_MEDIA.mp4} type="video/mp4" />}
     </video>
+  )}
+
+  {hasCaptions && (
+    <div class="hero-caption motion-reduce:hidden" aria-hidden="true">
+      <p class="hero-caption-text"></p>
+    </div>
   )}
 
   {/* Fallback for reduced-motion users when kind is "video" */}
@@ -54,3 +62,77 @@ const kind = HERO_MEDIA.kind;
     </div>
   )}
 </div>
+
+<style>
+  .hero-caption {
+    position: absolute;
+    left: 50%;
+    bottom: 1rem;
+    transform: translateX(-50%);
+    max-width: calc(100% - 2rem);
+    pointer-events: none;
+  }
+
+  .hero-caption-text {
+    display: inline-block;
+    margin: 0;
+    padding: 0.5rem 0.875rem;
+    border-radius: 9999px;
+    background: color-mix(in oklab, var(--color-ink) 72%, transparent);
+    color: var(--color-bone);
+    font-family: var(--font-sans);
+    font-size: 0.875rem;
+    line-height: 1.3;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    text-align: center;
+    text-wrap: balance;
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+    opacity: 0;
+    transition: opacity 220ms ease;
+  }
+
+  .hero-caption-text[data-visible="true"] {
+    opacity: 1;
+  }
+
+  @media (min-width: 768px) {
+    .hero-caption-text {
+      font-size: 1rem;
+      padding: 0.625rem 1.125rem;
+    }
+  }
+</style>
+
+{hasCaptions && (
+  <script is:inline define:vars={{ cues: captions }}>
+    (function () {
+      const video = document.querySelector(".hero-video");
+      const captionEl = document.querySelector(".hero-caption-text");
+      if (!video || !captionEl) return;
+
+      let lastText = "";
+      function tick() {
+        const t = video.currentTime;
+        const active = cues.find((c) => t >= c.start && t < c.end);
+        const next = active ? active.text : "";
+        if (next !== lastText) {
+          if (next) {
+            captionEl.textContent = next;
+            captionEl.dataset.visible = "true";
+          } else {
+            captionEl.dataset.visible = "false";
+          }
+          lastText = next;
+        }
+      }
+
+      video.addEventListener("timeupdate", tick);
+      video.addEventListener("seeking", tick);
+      video.addEventListener("loadedmetadata", tick);
+      tick();
+    })();
+  </script>
+)}

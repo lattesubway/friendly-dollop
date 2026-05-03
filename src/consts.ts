@@ -110,6 +110,16 @@ export const HERO_MEDIA = {
   poster: "/hero/poster.jpg",
   // Shown to screen readers + reduced-motion users:
   alt: "A pet being gently groomed at The Pet Affaire studio in Santa Monica.",
+  // Always-on subtitle overlay, synced to video.currentTime.
+  // Times are seconds. Set to [] to hide the caption strip.
+  captions: [
+    { start: 0.42, end: 2.30, text: "Welcome to The Pet Affaire." },
+    { start: 2.30, end: 4.42, text: "Time to get you handsome." },
+    { start: 4.42, end: 6.62, text: "Well done, you look fabulous." },
+    { start: 6.62, end: 10.94, text: "We pamper your pets like royalty." },
+    { start: 10.94, end: 12.70, text: "Our luxury treatment area." },
+    { start: 12.70, end: 16.10, text: "Happy faces, finest spa services." },
+  ],
 } as const;
 
 export const NAV = [
