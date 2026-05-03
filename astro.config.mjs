@@ -3,7 +3,7 @@ import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
-  site: 'https://www.thepetaffaire.com',
+  site: 'https://thepetaffaire.com',
   trailingSlash: 'always',
   integrations: [sitemap()],
   vite: {
