@@ -24,6 +24,43 @@ const related = all
 
 const speciesLabel = data.species === "dog" ? "Dogs" : data.species === "cat" ? "Cats" : "Cats & Dogs";
 
+const accentVar = data.species === "dog"
+  ? "var(--color-sage)"
+  : data.species === "cat"
+  ? "var(--color-rose)"
+  : "var(--color-clay)";
+
+const steps = [
+  { title: "Welcome", body: "Drop-off, gentle introduction, coat & skin check." },
+  { title: "Bath", body: "Premium hypoallergenic products, warm water, calm hands." },
+  { title: "Service", body: `${data.title.toLowerCase()} — done thoroughly, never rushed.` },
+  { title: "Pickup", body: "Hand-checked, brushed, and ready for home." },
+];
+
+const galleryBySpecies: Record<string, { src: string; alt: string; caption: string }[]> = {
+  dog: [
+    { src: "/gallery/01-pomeranian.jpg", alt: "Silver Pomeranian relaxing, freshly fluffed.", caption: "Pomeranian · freshly fluffed" },
+    { src: "/gallery/05-dachshund.jpg", alt: "Black and tan dapple dachshund, sleek and shiny.", caption: "Dachshund · sleek & shiny" },
+    { src: "/gallery/06-poodle-holiday.jpg", alt: "White poodle photographed in black and white by a Christmas tree.", caption: "Holiday poodle" },
+  ],
+  cat: [
+    { src: "/gallery/03-tabby-cat.jpg", alt: "Long-haired tabby cat with green eyes, freshly groomed.", caption: "Long-haired tabby · post-groom" },
+    { src: "/gallery/04-persian-chair.jpg", alt: "White Persian cat on an ornate silver tufted chair.", caption: "Persian · royalty" },
+    { src: "/gallery/09-meet-and-greet.jpg", alt: "Cream Shih Tzu and a small black puppy saying hello.", caption: "Studio mornings" },
+  ],
+  both: [
+    { src: "/gallery/02-pom-mix.jpg", alt: "Black and tan Pomeranian mix with bright eyes.", caption: "Pom mix · bright eyes" },
+    { src: "/gallery/03-tabby-cat.jpg", alt: "Long-haired tabby cat with green eyes, freshly groomed.", caption: "Long-haired tabby · post-groom" },
+    { src: "/gallery/06-poodle-holiday.jpg", alt: "White poodle photographed in black and white by a Christmas tree.", caption: "Holiday poodle" },
+  ],
+};
+const galleryPhotos = galleryBySpecies[data.species] ?? galleryBySpecies.both;
+const galleryTitle = data.species === "cat"
+  ? "Recent feline visitors."
+  : data.species === "dog"
+  ? "Recent canine visitors."
+  : "Recent visitors.";
+
 const serviceSchema = {
   "@context": "https://schema.org",
   "@type": "Service",
@@ -122,19 +159,65 @@ const breadcrumbSchema = {
         </div>
 
         <aside class="md:col-span-4">
-          <div class="aspect-[4/5] overflow-hidden rounded-3xl bg-[var(--color-bone)]">
-            {data.cover ? (
-              <img src={data.cover} alt={data.title} class="h-full w-full object-cover" loading="eager" />
-            ) : (
-              <div class="flex h-full w-full items-center justify-center bg-gradient-to-br from-[var(--color-rose)] via-[var(--color-bone)] to-[var(--color-sage)]">
-                <span class="font-display text-2xl text-black/40">{data.title}</span>
-              </div>
-            )}
+          <div class="relative" style={`--accent: ${accentVar}`}>
+            <span
+              aria-hidden="true"
+              class="absolute inset-0 -z-10 rounded-3xl bg-[var(--accent)] opacity-40 translate-x-3 translate-y-3 md:translate-x-4 md:translate-y-4"
+            ></span>
+            <svg
+              aria-hidden="true"
+              viewBox="0 0 64 64"
+              class="pointer-events-none absolute -top-7 -right-5 h-20 w-20 rotate-[18deg] text-[var(--accent)] opacity-60 md:h-24 md:w-24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.4"
+              stroke-linecap="round"
+            >
+              <ellipse cx="32" cy="44" rx="14" ry="11" />
+              <ellipse cx="13" cy="26" rx="5" ry="7" />
+              <ellipse cx="25" cy="14" rx="5" ry="7" />
+              <ellipse cx="39" cy="14" rx="5" ry="7" />
+              <ellipse cx="51" cy="26" rx="5" ry="7" />
+            </svg>
+            <div class="relative aspect-[4/5] overflow-hidden rounded-3xl bg-[var(--color-bone)]">
+              {data.cover ? (
+                <img src={data.cover} alt={data.title} class="h-full w-full object-cover" loading="eager" />
+              ) : (
+                <div class="flex h-full w-full items-center justify-center bg-gradient-to-br from-[var(--color-rose)] via-[var(--color-bone)] to-[var(--color-sage)]">
+                  <span class="font-display text-2xl text-black/40">{data.title}</span>
+                </div>
+              )}
+            </div>
           </div>
         </aside>
       </div>
     </div>
   </section>
+
+  {!data.addOn && (
+    <section class="border-b border-black/5">
+      <div class="mx-auto max-w-7xl px-6 py-16 md:px-10 md:py-20">
+        <p class="text-xs uppercase tracking-[0.22em] text-black/55">How it goes</p>
+        <h2 class="mt-4 font-display text-3xl md:text-4xl leading-[1.05]">From drop-off to home, calmly.</h2>
+        <ol class="mt-12 grid gap-10 md:grid-cols-4 md:gap-6">
+          {steps.map((step, i) => (
+            <li>
+              <div class="flex items-center gap-3">
+                <span class="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[var(--color-cream)] font-display text-base text-[var(--color-clay)] ring-1 ring-black/15">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                {i < steps.length - 1 && (
+                  <span aria-hidden="true" class="hidden h-px flex-1 bg-black/15 md:block"></span>
+                )}
+              </div>
+              <h3 class="mt-5 font-display text-xl">{step.title}</h3>
+              <p class="mt-2 text-sm text-black/70">{step.body}</p>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+  )}
 
   {data.includes.length > 0 && (
     <Section eyebrow="What's included" title="Every visit includes:" bg="bone">
@@ -154,6 +237,30 @@ const breadcrumbSchema = {
     <div class="prose prose-neutral max-w-2xl text-[17px] leading-relaxed">
       <Content />
     </div>
+  </Section>
+
+  <Section eyebrow="From the studio" title={galleryTitle}>
+    <ul class="grid grid-cols-3 gap-3 md:gap-4">
+      {galleryPhotos.map((p) => (
+        <li class="overflow-hidden rounded-2xl bg-[var(--color-bone)]">
+          <figure class="group relative aspect-square">
+            <img
+              src={p.src}
+              alt={p.alt}
+              loading="lazy"
+              decoding="async"
+              class="h-full w-full object-cover transition duration-500 group-hover:scale-[1.02]"
+            />
+            <figcaption class="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/60 to-transparent p-3 text-[11px] uppercase tracking-wider text-white opacity-0 transition group-hover:opacity-100">
+              {p.caption}
+            </figcaption>
+          </figure>
+        </li>
+      ))}
+    </ul>
+    <p class="mt-6 text-sm text-black/55">
+      See more in the <a href="/gallery" class="underline underline-offset-4 hover:text-black">full gallery</a>.
+    </p>
   </Section>
 
   {data.faq.length > 0 && (

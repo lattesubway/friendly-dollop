@@ -35,7 +35,15 @@ import Section from "@/components/Section.astro";
         </p>
       </div>
       <aside class="md:col-span-5">
-        <div class="aspect-[4/5] rounded-3xl bg-gradient-to-br from-[var(--color-sage)] via-[var(--color-bone)] to-[var(--color-rose)]"></div>
+        <div class="aspect-[4/5] overflow-hidden rounded-3xl bg-[var(--color-bone)]">
+          <img
+            src="/gallery/09-meet-and-greet.jpg"
+            alt="A cream Shih Tzu and a small black puppy saying hello after their groom at The Pet Affaire."
+            loading="lazy"
+            decoding="async"
+            class="h-full w-full object-cover"
+          />
+        </div>
       </aside>
     </div>
   </Section>
