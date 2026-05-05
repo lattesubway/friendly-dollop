@@ -1,6 +1,8 @@
 ---
+import { Picture } from "astro:assets";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import Section from "@/components/Section.astro";
+import meetGreet from "@/assets/gallery/09-meet-and-greet.jpg";
 ---
 
 <BaseLayout title="About" description="A neighborhood grooming studio in Santa Monica — gentle handling, expert finish, fair prices. For cats, dogs, and the families who love them.">
@@ -36,9 +38,12 @@ import Section from "@/components/Section.astro";
       </div>
       <aside class="md:col-span-5">
         <div class="aspect-[4/5] overflow-hidden rounded-3xl bg-[var(--color-bone)]">
-          <img
-            src="/gallery/09-meet-and-greet.jpg"
+          <Picture
+            src={meetGreet}
+            formats={["avif", "webp"]}
             alt="A cream Shih Tzu and a small black puppy saying hello after their groom at The Pet Affaire."
+            widths={[400, 600, 800, 1000]}
+            sizes="(max-width: 768px) 100vw, 42vw"
             loading="lazy"
             decoding="async"
             class="h-full w-full object-cover"

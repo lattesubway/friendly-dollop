@@ -1,58 +1,28 @@
 ---
+import { Picture } from "astro:assets";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import Section from "@/components/Section.astro";
 
-// Real photos from the studio. Drop matching files into `public/gallery/`.
-// Captions are intentionally short — the photos do the talking.
-// Mark `feature: true` to make a tile span 2x2 in the responsive grid.
+import pomeranian from "@/assets/gallery/01-pomeranian.jpg";
+import pomMix from "@/assets/gallery/02-pom-mix.jpg";
+import tabby from "@/assets/gallery/03-tabby-cat.jpg";
+import persian from "@/assets/gallery/04-persian-chair.jpg";
+import dachshund from "@/assets/gallery/05-dachshund.jpg";
+import poodle from "@/assets/gallery/06-poodle-holiday.jpg";
+import pupToys from "@/assets/gallery/07-pup-toys.jpg";
+import pupSweater from "@/assets/gallery/08-pup-sweater.jpg";
+import meetGreet from "@/assets/gallery/09-meet-and-greet.jpg";
+
 const items = [
-  {
-    src: "/gallery/01-pomeranian.jpg",
-    alt: "Silver Pomeranian relaxing on a jute rug, freshly fluffed.",
-    caption: "Pomeranian · freshly fluffed",
-    feature: true,
-  },
-  {
-    src: "/gallery/02-pom-mix.jpg",
-    alt: "Black and tan Pomeranian mix with bright eyes, sitting on a wood floor.",
-    caption: "Pom mix · bright eyes",
-  },
-  {
-    src: "/gallery/03-tabby-cat.jpg",
-    alt: "Long-haired tabby cat with green eyes, freshly groomed.",
-    caption: "Long-haired tabby · post-groom",
-  },
-  {
-    src: "/gallery/04-persian-chair.jpg",
-    alt: "White Persian cat sitting on an ornate silver tufted chair.",
-    caption: "Persian · royalty",
-    feature: true,
-  },
-  {
-    src: "/gallery/05-dachshund.jpg",
-    alt: "Black and tan dapple dachshund sitting on a bed.",
-    caption: "Dachshund · sleek & shiny",
-  },
-  {
-    src: "/gallery/06-poodle-holiday.jpg",
-    alt: "White poodle sitting next to a lit Christmas tree, photographed in black and white.",
-    caption: "Holiday poodle",
-  },
-  {
-    src: "/gallery/07-pup-toys.jpg",
-    alt: "Grey and white doodle puppy lounging on a sofa with stuffed toys after a groom.",
-    caption: "Post-spa playtime",
-  },
-  {
-    src: "/gallery/08-pup-sweater.jpg",
-    alt: "Grey and white doodle pup standing up in a knit turtleneck sweater.",
-    caption: "Sweater season",
-  },
-  {
-    src: "/gallery/09-meet-and-greet.jpg",
-    alt: "Cream Shih Tzu and a small black puppy saying hello after their groom.",
-    caption: "Studio mornings",
-  },
+  { src: pomeranian, alt: "Silver Pomeranian relaxing on a jute rug, freshly fluffed.", caption: "Pomeranian · freshly fluffed", feature: true },
+  { src: pomMix, alt: "Black and tan Pomeranian mix with bright eyes, sitting on a wood floor.", caption: "Pom mix · bright eyes" },
+  { src: tabby, alt: "Long-haired tabby cat with green eyes, freshly groomed.", caption: "Long-haired tabby · post-groom" },
+  { src: persian, alt: "White Persian cat sitting on an ornate silver tufted chair.", caption: "Persian · royalty", feature: true },
+  { src: dachshund, alt: "Black and tan dapple dachshund sitting on a bed.", caption: "Dachshund · sleek & shiny" },
+  { src: poodle, alt: "White poodle sitting next to a lit Christmas tree, photographed in black and white.", caption: "Holiday poodle" },
+  { src: pupToys, alt: "Grey and white doodle puppy lounging on a sofa with stuffed toys after a groom.", caption: "Post-spa playtime" },
+  { src: pupSweater, alt: "Grey and white doodle pup standing up in a knit turtleneck sweater.", caption: "Sweater season" },
+  { src: meetGreet, alt: "Cream Shih Tzu and a small black puppy saying hello after their groom.", caption: "Studio mornings" },
 ];
 ---
 
@@ -62,17 +32,16 @@ const items = [
       {items.map((it, i) => (
         <li class={`overflow-hidden rounded-2xl bg-[var(--color-bone)] ${it.feature ? "col-span-2 row-span-2" : ""}`}>
           <figure class="group relative h-full">
-            <img
+            <Picture
               src={it.src}
+              formats={["avif", "webp"]}
               alt={it.alt}
+              widths={it.feature ? [400, 600, 800, 1000] : [200, 300, 400, 500]}
+              sizes={it.feature ? "(max-width: 640px) 100vw, (max-width: 1024px) 66vw, 50vw" : "(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"}
               loading={i < 4 ? "eager" : "lazy"}
               decoding="async"
               class="block h-full w-full object-cover aspect-square transition duration-500 group-hover:scale-[1.02]"
-              onerror="this.style.opacity='0';this.parentElement.querySelector('[data-fallback]').style.display='flex';"
             />
-            <div data-fallback class="absolute inset-0 hidden items-center justify-center bg-gradient-to-br from-[var(--color-rose)] via-[var(--color-bone)] to-[var(--color-sage)]">
-              <span class="font-display text-sm text-black/40">{it.caption}</span>
-            </div>
             <figcaption class="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/60 to-transparent p-3 text-[11px] uppercase tracking-wider text-white opacity-0 transition group-hover:opacity-100">
               {it.caption}
             </figcaption>

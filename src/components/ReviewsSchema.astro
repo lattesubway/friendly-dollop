@@ -1,0 +1,57 @@
+---
+import { getCollection, type CollectionEntry } from "astro:content";
+import { SITE } from "@/consts";
+
+interface Props {
+  includeReviews?: boolean;
+  featuredOnly?: boolean;
+}
+const { includeReviews = false, featuredOnly = false } = Astro.props;
+
+let items: CollectionEntry<"reviews">[] = await getCollection("reviews");
+if (featuredOnly) items = items.filter((r) => r.data.featured);
+items.sort((a, b) => (b.data.date?.getTime() ?? 0) - (a.data.date?.getTime() ?? 0));
+
+const total = items.length;
+const ratingValue =
+  total > 0 ? items.reduce((s, r) => s + r.data.rating, 0) / total : 0;
+
+const schema: Record<string, unknown> = {
+  "@context": "https://schema.org",
+  "@type": "PetStore",
+  "@id": `${SITE.url}#business`,
+  name: SITE.name,
+  url: SITE.url,
+  aggregateRating: {
+    "@type": "AggregateRating",
+    ratingValue: ratingValue.toFixed(1),
+    reviewCount: total,
+    bestRating: 5,
+    worstRating: 1,
+  },
+};
+
+if (includeReviews) {
+  schema.review = items.map((r) => ({
+    "@type": "Review",
+    author: { "@type": "Person", name: r.data.author },
+    reviewRating: {
+      "@type": "Rating",
+      ratingValue: r.data.rating,
+      bestRating: 5,
+      worstRating: 1,
+    },
+    reviewBody: (r.body ?? "").trim(),
+    ...(r.data.date && {
+      datePublished: r.data.date.toISOString().slice(0, 10),
+    }),
+    ...(r.data.source && {
+      publisher: { "@type": "Organization", name: r.data.source },
+    }),
+    itemReviewed: { "@id": `${SITE.url}#business` },
+  }));
+}
+---
+{total > 0 && (
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(schema)} />
+)}

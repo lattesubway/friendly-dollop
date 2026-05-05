@@ -49,4 +49,19 @@ const reviews = defineCollection({
   }),
 });
 
-export const collections = { services, journal, reviews };
+const areas = defineCollection({
+  loader: glob({ pattern: "**/*.md", base: "./src/content/areas" }),
+  schema: z.object({
+    title: z.string(),
+    headline: z.string(),
+    intro: z.string(),
+    driveNote: z.string(),
+    landmarks: z.array(z.string()).default([]),
+    neighborhoods: z.array(z.string()).default([]),
+    order: z.number().default(0),
+    seoTitle: z.string().optional(),
+    seoDescription: z.string().optional(),
+  }),
+});
+
+export const collections = { services, journal, reviews, areas };

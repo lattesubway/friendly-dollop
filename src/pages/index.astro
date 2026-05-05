@@ -2,6 +2,7 @@
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import Section from "@/components/Section.astro";
 import Reviews from "@/components/Reviews.astro";
+import ReviewsSchema from "@/components/ReviewsSchema.astro";
 import Map from "@/components/Map.astro";
 import HeroMedia from "@/components/HeroMedia.astro";
 import { getCollection } from "astro:content";
@@ -131,6 +132,7 @@ const reviewCount = (await getCollection("reviews")).length;
 
   <Section eyebrow="What clients say" title="Kind words from kind humans." bg="bone">
     <Reviews featuredOnly limit={3} />
+    <ReviewsSchema includeReviews featuredOnly />
     <div class="mt-10 flex flex-wrap gap-x-6 gap-y-2">
       {reviewCount > 3 && (
         <a href="/reviews" class="text-sm underline underline-offset-4 hover:text-black">Read all reviews →</a>
