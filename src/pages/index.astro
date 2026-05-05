@@ -5,8 +5,17 @@ import Reviews from "@/components/Reviews.astro";
 import ReviewsSchema from "@/components/ReviewsSchema.astro";
 import Map from "@/components/Map.astro";
 import HeroMedia from "@/components/HeroMedia.astro";
+import PhotoBand from "@/components/PhotoBand.astro";
 import { getCollection } from "astro:content";
 import { SITE } from "@/consts";
+import { galleryItems } from "@/data/gallery";
+
+const heroBand = [
+  galleryItems.pomeranian,
+  galleryItems.persian,
+  galleryItems.dachshund,
+  galleryItems.meetGreet,
+];
 
 const services = (await getCollection("services"))
   .filter((s) => s.data.featured && !s.data.addOn)
@@ -76,7 +85,28 @@ const reviewCount = (await getCollection("reviews")).length;
       </div>
 
       <aside class="md:col-span-5 md:pl-6 reveal">
-        <HeroMedia />
+        <div class="relative">
+          <span
+            aria-hidden="true"
+            class="absolute inset-0 -z-10 rounded-3xl bg-[var(--color-clay)] opacity-35 translate-x-3 translate-y-3 md:translate-x-4 md:translate-y-4"
+          ></span>
+          <svg
+            aria-hidden="true"
+            viewBox="0 0 64 64"
+            class="pointer-events-none absolute -top-7 -left-5 h-20 w-20 -rotate-[14deg] text-[var(--color-clay)] opacity-55 md:h-24 md:w-24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.4"
+            stroke-linecap="round"
+          >
+            <ellipse cx="32" cy="44" rx="14" ry="11" />
+            <ellipse cx="13" cy="26" rx="5" ry="7" />
+            <ellipse cx="25" cy="14" rx="5" ry="7" />
+            <ellipse cx="39" cy="14" rx="5" ry="7" />
+            <ellipse cx="51" cy="26" rx="5" ry="7" />
+          </svg>
+          <HeroMedia />
+        </div>
       </aside>
     </div>
   </section>
@@ -110,7 +140,14 @@ const reviewCount = (await getCollection("reviews")).length;
     </div>
   </Section>
 
-  <Section eyebrow="What we stand for" title="It's more than just grooming. It's our art form.">
+  <Section eyebrow="From the studio" title="Recent visitors." accent="rose">
+    <PhotoBand items={heroBand} aspect="square" />
+    <p class="mt-6 text-sm text-black/55">
+      A handful of friends from this season — see more in the <a href="/gallery" class="underline underline-offset-4 hover:text-black">gallery</a>.
+    </p>
+  </Section>
+
+  <Section eyebrow="What we stand for" title="It's more than just grooming. It's our art form." accent="clay">
     <div class="grid gap-10 md:grid-cols-3 text-[15px] leading-relaxed text-black/75">
       <div>
         <p class="text-xs uppercase tracking-[0.22em] text-[var(--color-clay)]">Gentle &amp; safe</p>
@@ -130,7 +167,7 @@ const reviewCount = (await getCollection("reviews")).length;
     </div>
   </Section>
 
-  <Section eyebrow="What clients say" title="Kind words from kind humans." bg="bone">
+  <Section eyebrow="What clients say" title="Kind words from kind humans." bg="rose" accent="rose">
     <Reviews featuredOnly limit={3} />
     <ReviewsSchema includeReviews featuredOnly />
     <div class="mt-10 flex flex-wrap gap-x-6 gap-y-2">

@@ -2,7 +2,8 @@
 import { Picture } from "astro:assets";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import Section from "@/components/Section.astro";
-import meetGreet from "@/assets/gallery/09-meet-and-greet.jpg";
+import { galleryItems } from "@/data/gallery";
+const meetGreet = galleryItems.meetGreet.src;
 ---
 
 <BaseLayout title="About" description="A neighborhood grooming studio in Santa Monica — gentle handling, expert finish, fair prices. For cats, dogs, and the families who love them.">
@@ -21,8 +22,7 @@ import meetGreet from "@/assets/gallery/09-meet-and-greet.jpg";
         <p>
           <strong class="text-black">Gentle, safe, calm.</strong> The first job is always how the
           animal feels. We work slowly, read the pet in front of us, and stop when stopping is the
-          right call. One pet at a time, no all-day waits, no rushed hands. Cats get their own
-          quiet windows — no dog noise, no rush, no stranger touching them before they're ready.
+          right call. No all-day waits, no rushed hands.
         </p>
         <p>
           <strong class="text-black">Precision and craft.</strong> Our groomers have built a
@@ -37,23 +37,44 @@ import meetGreet from "@/assets/gallery/09-meet-and-greet.jpg";
         </p>
       </div>
       <aside class="md:col-span-5">
-        <div class="aspect-[4/5] overflow-hidden rounded-3xl bg-[var(--color-bone)]">
-          <Picture
-            src={meetGreet}
-            formats={["avif", "webp"]}
-            alt="A cream Shih Tzu and a small black puppy saying hello after their groom at The Pet Affaire."
-            widths={[400, 600, 800, 1000]}
-            sizes="(max-width: 768px) 100vw, 42vw"
-            loading="lazy"
-            decoding="async"
-            class="h-full w-full object-cover"
-          />
+        <div class="relative">
+          <span
+            aria-hidden="true"
+            class="absolute inset-0 -z-10 rounded-3xl bg-[var(--color-rose)] opacity-45 translate-x-3 translate-y-3 md:translate-x-4 md:translate-y-4"
+          ></span>
+          <svg
+            aria-hidden="true"
+            viewBox="0 0 64 64"
+            class="pointer-events-none absolute -top-7 -right-5 h-20 w-20 rotate-[18deg] text-[var(--color-clay)] opacity-55 md:h-24 md:w-24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.4"
+            stroke-linecap="round"
+          >
+            <ellipse cx="32" cy="44" rx="14" ry="11" />
+            <ellipse cx="13" cy="26" rx="5" ry="7" />
+            <ellipse cx="25" cy="14" rx="5" ry="7" />
+            <ellipse cx="39" cy="14" rx="5" ry="7" />
+            <ellipse cx="51" cy="26" rx="5" ry="7" />
+          </svg>
+          <div class="relative aspect-[4/5] overflow-hidden rounded-3xl bg-[var(--color-bone)]">
+            <Picture
+              src={meetGreet}
+              formats={["avif", "webp"]}
+              alt="A cream Shih Tzu and a small black puppy saying hello after their groom at The Pet Affaire."
+              widths={[400, 600, 800, 1000]}
+              sizes="(max-width: 768px) 100vw, 42vw"
+              loading="lazy"
+              decoding="async"
+              class="h-full w-full object-cover"
+            />
+          </div>
         </div>
       </aside>
     </div>
   </Section>
 
-  <Section eyebrow="Our Pet Affaire Promise" title="Calm hands. Glowing coats. Trust that builds, one groom at a time." bg="bone">
+  <Section eyebrow="Our Pet Affaire Promise" title="Calm hands. Glowing coats. Trust that builds, one groom at a time." bg="rose" accent="rose">
     <ul class="grid gap-6 md:grid-cols-3">
       <li class="rounded-3xl border border-black/10 bg-white p-7">
         <p class="text-xs uppercase tracking-[0.22em] text-[var(--color-clay)]">Hypoallergenic care</p>
@@ -87,11 +108,9 @@ import meetGreet from "@/assets/gallery/09-meet-and-greet.jpg";
 
   <Section eyebrow="Our promises" title="What we'll always do.">
     <ul class="grid gap-6 md:grid-cols-2 text-[15px] leading-relaxed text-black/75">
-      <li><strong class="text-black">One pet at a time.</strong> No barking room, no kennel waits — just full attention on your pet.</li>
       <li><strong class="text-black">Hand-finished.</strong> Scissor finishing on every cut, every time.</li>
       <li><strong class="text-black">Honest pricing.</strong> If a groom is going to cost more, you'll hear it before we begin — never after.</li>
       <li><strong class="text-black">Welfare-first.</strong> If a groom isn't safe to finish, we stop and explain why. We don't push through for the sake of a finished cut.</li>
-      <li><strong class="text-black">Cat-only windows.</strong> Dog-free, quiet, calm — because cats deserve that.</li>
       <li><strong class="text-black">Open communication.</strong> Real-time texts on arrival, mid-groom, and ready-for-pickup so nothing surprises you.</li>
     </ul>
   </Section>

@@ -14,6 +14,11 @@
   --color-rose: #e8c7c0;
   --color-sage: #93a392;
   --color-ocean: #6a8aa3;
+
+  /* Low-saturation tints for warm section backgrounds. Mixed against cream
+     so they stay editorial — not candy. */
+  --color-rose-tint: color-mix(in oklab, var(--color-rose) 32%, var(--color-cream));
+  --color-sage-tint: color-mix(in oklab, var(--color-sage) 22%, var(--color-cream));
 }
 
 html {
@@ -21,11 +26,13 @@ html {
   color: var(--color-ink);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  font-size: 17px;
 }
 
 body {
   font-family: var(--font-sans);
   font-feature-settings: "ss01", "cv11";
+  line-height: 1.55;
 }
 
 ::selection {

@@ -4,23 +4,46 @@ interface Props {
   eyebrow?: string;
   title?: string;
   intro?: string;
-  bg?: "cream" | "bone" | "ink";
+  bg?: "cream" | "bone" | "ink" | "rose" | "sage";
+  accent?: "clay" | "sage" | "rose" | "muted";
   class?: string;
 }
-const { id, eyebrow, title, intro, bg = "cream", class: cls = "" } = Astro.props;
+const {
+  id,
+  eyebrow,
+  title,
+  intro,
+  bg = "cream",
+  accent = "muted",
+  class: cls = "",
+} = Astro.props;
+
 const bgClass =
   bg === "ink"
     ? "bg-[var(--color-ink)] text-[var(--color-cream)]"
     : bg === "bone"
     ? "bg-[var(--color-bone)]"
+    : bg === "rose"
+    ? "bg-[var(--color-rose-tint)]"
+    : bg === "sage"
+    ? "bg-[var(--color-sage-tint)]"
     : "";
+
+const accentClass =
+  accent === "clay"
+    ? "text-[var(--color-clay)]"
+    : accent === "sage"
+    ? "text-[color-mix(in_oklab,var(--color-sage)_85%,var(--color-ink))]"
+    : accent === "rose"
+    ? "text-[color-mix(in_oklab,var(--color-clay)_70%,var(--color-rose))]"
+    : "text-current/60";
 ---
 <section id={id} class={`py-20 md:py-28 ${bgClass} ${cls}`}>
   <div class="mx-auto max-w-7xl px-6 md:px-10">
     {(eyebrow || title || intro) && (
       <header class="mb-12 max-w-3xl">
         {eyebrow && (
-          <p class="text-xs uppercase tracking-[0.22em] text-current/60">{eyebrow}</p>
+          <p class={`text-xs uppercase tracking-[0.22em] ${accentClass}`}>{eyebrow}</p>
         )}
         {title && (
           <h2 class="mt-4 font-display text-3xl md:text-5xl leading-[1.05]">{title}</h2>

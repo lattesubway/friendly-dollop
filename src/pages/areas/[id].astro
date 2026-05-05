@@ -1,11 +1,24 @@
 ---
 import { getCollection, render, type CollectionEntry } from "astro:content";
+import { Picture } from "astro:assets";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import Section from "@/components/Section.astro";
 import Reviews from "@/components/Reviews.astro";
 import ReviewsSchema from "@/components/ReviewsSchema.astro";
 import Map from "@/components/Map.astro";
+import PhotoBand from "@/components/PhotoBand.astro";
 import { SITE } from "@/consts";
+import { galleryItems, type GalleryItem } from "@/data/gallery";
+
+const heroByArea: Record<string, GalleryItem> = {
+  "santa-monica": galleryItems.meetGreet,
+  "pacific-palisades": galleryItems.poodle,
+  venice: galleryItems.pomMix,
+  brentwood: galleryItems.persian,
+  "mar-vista": galleryItems.pupSweater,
+};
+
+const bandPhotos = [galleryItems.pomeranian, galleryItems.tabby, galleryItems.dachshund];
 
 export async function getStaticPaths() {
   const areas = await getCollection("areas");
@@ -19,6 +32,7 @@ interface Props { area: CollectionEntry<"areas">; }
 const { area } = Astro.props;
 const { data } = area;
 const { Content } = await render(area);
+const hero = heroByArea[area.id] ?? galleryItems.meetGreet;
 
 const services = (await getCollection("services"))
   .filter((s) => !s.data.addOn)
@@ -67,22 +81,64 @@ const areaSchema = {
         <span>{data.title}</span>
       </nav>
 
-      <p class="mt-8 text-xs uppercase tracking-[0.22em] text-[var(--color-clay)]">Serving {data.title}</p>
-      <h1 class="mt-3 max-w-3xl font-display text-5xl md:text-6xl leading-[1.02]">{data.headline}</h1>
-      <p class="mt-6 max-w-2xl text-lg text-black/75">{data.intro}</p>
+      <div class="mt-8 grid gap-12 md:grid-cols-12">
+        <div class="md:col-span-7">
+          <p class="text-xs uppercase tracking-[0.22em] text-[color-mix(in_oklab,var(--color-sage)_85%,var(--color-ink))]">
+            Serving {data.title}
+          </p>
+          <h1 class="mt-3 font-display text-5xl md:text-6xl leading-[1.02]">{data.headline}</h1>
+          <p class="mt-6 max-w-xl text-lg text-black/75">{data.intro}</p>
 
-      <div class="mt-8 flex flex-wrap gap-3">
-        <a href="/book" class="rounded-full bg-[var(--color-ink)] px-5 py-3 text-sm text-[var(--color-cream)] hover:bg-black">
-          Book an appointment
-        </a>
-        <a href={SITE.mapDirectionsGoogle} class="rounded-full border border-black/15 px-5 py-3 text-sm hover:border-black/40">
-          Get directions
-        </a>
+          <div class="mt-8 flex flex-wrap gap-3">
+            <a href="/book" class="rounded-full bg-[var(--color-ink)] px-5 py-3 text-sm text-[var(--color-cream)] hover:bg-black">
+              Book an appointment
+            </a>
+            <a href={SITE.mapDirectionsGoogle} class="rounded-full border border-black/15 px-5 py-3 text-sm hover:border-black/40">
+              Get directions
+            </a>
+          </div>
+        </div>
+
+        <aside class="md:col-span-5">
+          <div class="relative">
+            <span
+              aria-hidden="true"
+              class="absolute inset-0 -z-10 rounded-3xl bg-[var(--color-sage)] opacity-40 translate-x-3 translate-y-3 md:translate-x-4 md:translate-y-4"
+            ></span>
+            <svg
+              aria-hidden="true"
+              viewBox="0 0 64 64"
+              class="pointer-events-none absolute -top-7 -right-5 h-20 w-20 rotate-[18deg] text-[var(--color-sage)] opacity-65 md:h-24 md:w-24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.4"
+              stroke-linecap="round"
+            >
+              <ellipse cx="32" cy="44" rx="14" ry="11" />
+              <ellipse cx="13" cy="26" rx="5" ry="7" />
+              <ellipse cx="25" cy="14" rx="5" ry="7" />
+              <ellipse cx="39" cy="14" rx="5" ry="7" />
+              <ellipse cx="51" cy="26" rx="5" ry="7" />
+            </svg>
+            <div class="relative aspect-[4/5] overflow-hidden rounded-3xl bg-[var(--color-bone)]">
+              <Picture
+                src={hero.src}
+                formats={["avif", "webp"]}
+                alt={hero.alt}
+                widths={[400, 600, 800, 1000]}
+                sizes="(max-width: 768px) 100vw, 42vw"
+                loading="eager"
+                decoding="async"
+                class="h-full w-full object-cover"
+              />
+            </div>
+          </div>
+        </aside>
       </div>
     </div>
   </section>
 
-  <Section eyebrow="Getting here" title={`From ${data.title} to our door.`} bg="bone">
+  <Section eyebrow="Getting here" title={`From ${data.title} to our door.`} bg="bone" accent="sage">
     <div class="grid items-stretch gap-10 md:grid-cols-12">
       <div class="md:col-span-7">
         <Map height="380px" />
@@ -113,7 +169,7 @@ const areaSchema = {
     </div>
   </Section>
 
-  <Section eyebrow="A bit about the area" title={`What we hear from ${data.title} clients.`}>
+  <Section eyebrow="A bit about the area" title={`What we hear from ${data.title} clients.`} accent="sage">
     <div class="prose prose-neutral max-w-2xl text-[17px] leading-relaxed">
       <Content />
     </div>
@@ -129,7 +185,14 @@ const areaSchema = {
     )}
   </Section>
 
-  <Section eyebrow="Services" title="Everything we offer." bg="bone">
+  <Section eyebrow="From the studio" title="Recent visitors." bg="sage" accent="sage">
+    <PhotoBand items={bandPhotos} aspect="square" />
+    <p class="mt-6 text-sm text-black/55">
+      More in the <a href="/gallery" class="underline underline-offset-4 hover:text-black">gallery</a>.
+    </p>
+  </Section>
+
+  <Section eyebrow="Services" title="Everything we offer." bg="bone" accent="sage">
     <ul class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
       {services.map((s) => (
         <li>
@@ -153,7 +216,7 @@ const areaSchema = {
     </ul>
   </Section>
 
-  <Section eyebrow="What clients say" title="Kind words from kind humans.">
+  <Section eyebrow="What clients say" title="Kind words from kind humans." bg="rose" accent="rose">
     <Reviews featuredOnly limit={3} />
     <ReviewsSchema includeReviews featuredOnly />
   </Section>

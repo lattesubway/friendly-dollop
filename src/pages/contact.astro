@@ -2,7 +2,11 @@
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import Section from "@/components/Section.astro";
 import Map from "@/components/Map.astro";
+import PhotoBand from "@/components/PhotoBand.astro";
 import { SITE } from "@/consts";
+import { galleryItems } from "@/data/gallery";
+
+const band = [galleryItems.pupSweater, galleryItems.tabby, galleryItems.pomMix];
 ---
 
 <BaseLayout title="Contact" description="Reach The Pet Affaire by phone, email, or send a message — Santa Monica, California.">
@@ -93,6 +97,10 @@ import { SITE } from "@/consts";
         </p>
       </div>
     </div>
+  </Section>
+
+  <Section eyebrow="Studio life" title="A few faces from the studio." bg="sage" accent="sage">
+    <PhotoBand items={band} aspect="square" />
   </Section>
 
   <Section eyebrow="Find us" title="On Lincoln, just south of Pico." bg="bone">
